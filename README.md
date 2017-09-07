@@ -1,8 +1,6 @@
 # [React Intersection List](https://researchgate.github.io/react-intersection-list/)
 
-[![Greenkeeper badge](https://badges.greenkeeper.io/researchgate/react-intersection-list.svg)](https://greenkeeper.io/)
-
-[![Build Status](https://travis-ci.org/researchgate/react-intersection-list.svg?branch=master)](https://travis-ci.org/researchgate/react-intersection-list) [![Codecov](https://img.shields.io/codecov/c/github/researchgate/react-intersection-list.svg)](https://codecov.io/gh/researchgate/react-intersection-list) [![styled with prettier](https://img.shields.io/badge/styled_with-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
+[![Build Status](https://travis-ci.org/researchgate/react-intersection-list.svg?branch=master)](https://travis-ci.org/researchgate/react-intersection-list) [![Codecov](https://img.shields.io/codecov/c/github/researchgate/react-intersection-list.svg)](https://codecov.io/gh/researchgate/react-intersection-list) [![Greenkeeper badge](https://badges.greenkeeper.io/researchgate/react-intersection-list.svg)](https://greenkeeper.io/) [![styled with prettier](https://img.shields.io/badge/styled_with-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
 
 > **Agent Smith:** ...we have no choice but to continue as planned. Deploy the sentinels. Immediately.
 
