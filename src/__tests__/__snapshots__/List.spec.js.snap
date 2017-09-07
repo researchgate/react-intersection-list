@@ -1,0 +1,6 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`handleUpdate throws once if sentinel detects intersecting on mount 1`] = `
+"Warning: The sentinel detected a very short list size. This will cause a detrimental behavior.
+Make sure to pass a sufficienly large \`pageSize\` so that the containing elements overflow your list's size"
+`;

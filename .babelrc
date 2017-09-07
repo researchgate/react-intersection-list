@@ -1,0 +1,3 @@
+{
+  "presets": ["@researchgate/babel-preset-rg"]
+}

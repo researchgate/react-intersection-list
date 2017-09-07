@@ -1,0 +1,9 @@
+.DS_store
+.vscode
+node_modules
+npm-debug.log*
+lib
+docs/static
+docs/favicon*
+docs/*.html
+flow-typed

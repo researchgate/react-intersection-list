@@ -1,0 +1,12 @@
+[ignore]
+.*/node_modules/.*
+
+[include]
+
+[libs]
+
+[options]
+suppress_comment=.*\\$FlowIgnore.*
+
+[version]
+^0.54.1

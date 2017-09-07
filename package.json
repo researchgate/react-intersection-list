@@ -1,0 +1,72 @@
+{
+  "name": "@researchgate/react-intersection-list",
+  "description": "React List Component using the Intersection Observer API",
+  "version": "0.1.0",
+  "author": "Luis Merino <mail@luismerino.name>",
+  "bugs": {
+    "url": "https://github.com/researchgate/react-intersection-list/issues"
+  },
+  "dependencies": {
+    "@researchgate/react-intersection-observer": "^0.2.0",
+    "prop-types": "^15.5.10",
+    "warning": "^3.0.0"
+  },
+  "devDependencies": {
+    "@researchgate/babel-preset-rg": "^1.0.1",
+    "@researchgate/eslint-config-rg-base": "^0.3.0",
+    "@researchgate/eslint-config-rg-react": "^0.3.0",
+    "@storybook/addon-options": "^3.2.4",
+    "@storybook/react": "^3.2.8",
+    "babel-cli": "^6.24.1",
+    "babel-eslint": "next",
+    "babel-jest": "^20.0.3",
+    "cross-env": "^5.0.5",
+    "css-loader": "^0.28.4",
+    "eslint": "^4.6.1",
+    "eslint-plugin-flowtype": "^2.35.1",
+    "flow-bin": "^0.54.1",
+    "husky": "^0.14.3",
+    "intersection-observer": "^0.4.2",
+    "jest": "^20.0.4",
+    "lint-staged": "^4.0.2",
+    "react": "^15.4.0 || ^16.0.0",
+    "react-dom": "^15.4.0 || ^16.0.0",
+    "react-test-renderer": "^15.6.1",
+    "style-loader": "^0.18.2"
+  },
+  "files": ["lib"],
+  "homepage": "https://github.com/researchgate/react-intersection-list#readme",
+  "keywords": ["Intersection", "Observer", "react", "component", "list", "infinite", "scrollable", "researchgate"],
+  "license": "MIT",
+  "lint-staged": {
+    "{src,docs/docs}/**/*.js": ["eslint --fix", "git add"]
+  },
+  "main": "lib/js/index.js",
+  "module": "lib/es/index.js",
+  "peerDependencies": {
+    "react": "^15.4.0 || ^16.0.0",
+    "react-dom": "^15.4.0 || ^16.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/researchgate/react-intersection-list"
+  },
+  "jest": {
+    "rootDir": "src",
+    "testMatch": ["**/__tests__/**/*.spec.js"]
+  },
+  "scripts": {
+    "build": "rm -rf lib && npm run build:js && npm run build:es",
+    "build:js":
+      "cross-env BABEL_ENV=production BABEL_OUTPUT=cjs babel src --out-dir lib/js --ignore __tests__ --copy-files",
+    "build:es":
+      "cross-env BABEL_ENV=production BABEL_OUTPUT=esm babel src --out-dir lib/es --ignore __tests__ --copy-files",
+    "build:storybook": "build-storybook --output-dir docs",
+    "format": "eslint --fix {src,docs/docs}/**/*.js",
+    "lint": "eslint {src,docs/docs}/.",
+    "precommit": "lint-staged",
+    "prepublish": "npm run build",
+    "storybook": "start-storybook -p 9001 -c .storybook",
+    "test": "jest"
+  }
+}
