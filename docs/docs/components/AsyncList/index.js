@@ -1,54 +1,89 @@
 import React from 'react';
 import List from '../../../../src';
-import Countdown from './Countdown';
 
-const TIMEOUT_MS = 1500;
+const PAGE_SIZE = 20;
 
 export default class extends React.Component {
     state = {
-        offset: 40,
+        page: 0,
         isLoading: false,
+        repos: [],
     };
 
-    handleLoadMore = (offset, limit) => {
+    updateRepos(repos) {
+        this.setState({
+            isLoading: false,
+            repos: [...this.state.repos, ...repos],
+        });
+    }
+
+    handleLoadMore = () => {
         if (this.state.isLoading) {
             return;
         }
+        const nextPage = this.state.page + 1;
         this.setState({
             isLoading: true,
+            page: nextPage,
         });
-        this.timeout = setTimeout(() => {
-            this.setState({
-                offset: offset + limit,
-                isLoading: false,
+
+        const etag = sessionStorage.getItem('etag');
+        let headers = {};
+        if (etag) {
+            headers = {
+                'If-None-Match': etag,
+            };
+        }
+        fetch(`https://api.github.com/users/researchgate/repos?type=public&per_page=${PAGE_SIZE}&page=${nextPage}`, {
+            headers,
+        })
+            .then(response => {
+                if (response.status !== 200) {
+                    throw new Error(`Failed with status code: ${response.status}`);
+                }
+                const ifNoneMatch = response.headers['If-None-Match'];
+                if (ifNoneMatch) {
+                    sessionStorage.setItem('etag', ifNoneMatch);
+                }
+                return response.json();
+            })
+            .then(repos => {
+                this.updateRepos(repos.filter(repo => repo.fork === false && repo.language));
+            })
+            .catch(err => {
+                throw err;
             });
-        }, TIMEOUT_MS);
     };
 
-    componentWillUnmount() {
-        clearTimeout(this.timeout);
-    }
-
     renderItems = (items, ref) => (
-        <div className="list" ref={ref}>
+        <div className="list list--compact" ref={ref}>
             {items}
         </div>
     );
 
-    renderItem(index, key) {
-        return <div key={key}>{index}</div>;
+    renderItem = (index, key) => {
+        const repo = this.state.repos[index];
+        return (
+            <div key={key}>
+                {repo.name} - {repo.language}
+            </div>
+        );
+    };
+
+    componentDidMount() {
+        this.handleLoadMore();
     }
 
     render() {
         return (
             <div>
-                {this.state.isLoading && <Countdown time={TIMEOUT_MS} />}
+                {this.state.isLoading && <div className="loading">Loading</div>}
                 <List
-                    initialIndex={20}
-                    length={this.state.offset}
-                    pageSize={20}
+                    length={this.state.repos.length}
+                    pageSize={PAGE_SIZE}
                     itemsRenderer={this.renderItems}
                     onIntersection={this.handleLoadMore}
+                    threshold="0px"
                 >
                     {this.renderItem}
                 </List>

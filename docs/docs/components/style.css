@@ -1,6 +1,6 @@
 body {
-  font-family: -apple-system, '.SFNSText-Regular', 'San Francisco', Roboto, 'Segoe UI', 'Helvetica Neue',
-    'Lucida Grande', sans-serif;
+  font-family: -apple-system, ".SFNSText-Regular", "San Francisco", Roboto,
+    "Segoe UI", "Helvetica Neue", "Lucida Grande", sans-serif;
   margin: 0;
   padding: 0;
   color: #555;
@@ -43,6 +43,10 @@ body {
 .list--horizontal > * {
   min-width: 100px;
   text-align: center;
+}
+
+.list--compact {
+  height: 333px;
 }
 
 .list > * {
