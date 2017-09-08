@@ -32,14 +32,29 @@
     "react": "^15.4.0 || ^16.0.0",
     "react-dom": "^15.4.0 || ^16.0.0",
     "react-test-renderer": "^15.6.1",
-    "style-loader": "^0.18.2"
+    "style-loader": "^0.18.2",
+    "whatwg-fetch": "^2.0.3"
   },
-  "files": ["lib"],
+  "files": [
+    "lib"
+  ],
   "homepage": "https://github.com/researchgate/react-intersection-list#readme",
-  "keywords": ["Intersection", "Observer", "react", "component", "list", "infinite", "scrollable", "researchgate"],
+  "keywords": [
+    "Intersection",
+    "Observer",
+    "react",
+    "component",
+    "list",
+    "infinite",
+    "scrollable",
+    "researchgate"
+  ],
   "license": "MIT",
   "lint-staged": {
-    "{src,docs/docs}/**/*.js": ["eslint --fix", "git add"]
+    "{src,docs/docs}/**/*.js": [
+      "eslint --fix",
+      "git add"
+    ]
   },
   "main": "lib/js/index.js",
   "module": "lib/es/index.js",
@@ -53,14 +68,14 @@
   },
   "jest": {
     "rootDir": "src",
-    "testMatch": ["**/__tests__/**/*.spec.js"]
+    "testMatch": [
+      "**/__tests__/**/*.spec.js"
+    ]
   },
   "scripts": {
     "build": "rm -rf lib && npm run build:js && npm run build:es",
-    "build:js":
-      "cross-env BABEL_ENV=production BABEL_OUTPUT=cjs babel src --out-dir lib/js --ignore __tests__ --copy-files",
-    "build:es":
-      "cross-env BABEL_ENV=production BABEL_OUTPUT=esm babel src --out-dir lib/es --ignore __tests__ --copy-files",
+    "build:js": "cross-env BABEL_ENV=production BABEL_OUTPUT=cjs babel src --out-dir lib/js --ignore __tests__ --copy-files",
+    "build:es": "cross-env BABEL_ENV=production BABEL_OUTPUT=esm babel src --out-dir lib/es --ignore __tests__ --copy-files",
     "build:storybook": "build-storybook --output-dir docs",
     "format": "eslint --fix {src,docs/docs}/**/*.js",
     "lint": "eslint {src,docs/docs}/.",

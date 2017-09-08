@@ -5,15 +5,16 @@ const PAGE_SIZE = 20;
 
 export default class extends React.Component {
     state = {
-        page: 0,
+        currentPage: 0,
         isLoading: false,
         repos: [],
     };
 
-    updateRepos(repos) {
+    feedList(repos) {
         this.setState({
             isLoading: false,
             repos: [...this.state.repos, ...repos],
+            hasMore: repos.length > 0,
         });
     }
 
@@ -21,37 +22,46 @@ export default class extends React.Component {
         if (this.state.isLoading) {
             return;
         }
-        const nextPage = this.state.page + 1;
+        const currentPage = this.state.currentPage + 1;
+
         this.setState({
             isLoading: true,
-            page: nextPage,
+            currentPage,
         });
 
-        const etag = sessionStorage.getItem('etag');
-        let headers = {};
-        if (etag) {
-            headers = {
-                'If-None-Match': etag,
-            };
+        const url = 'https://api.github.com/users/researchgate/repos';
+        const qs = `?type=public&per_page=${PAGE_SIZE}&page=${currentPage}`;
+
+        const headers = {
+            'Accept-Encoding': '',
+        };
+        const ifNoneMatch = sessionStorage.getItem('etag');
+        if (ifNoneMatch) {
+            headers['if-none-match'] = ifNoneMatch.match(/(?:\d|[a-z])+/)[0];
         }
-        fetch(`https://api.github.com/users/researchgate/repos?type=public&per_page=${PAGE_SIZE}&page=${nextPage}`, {
-            headers,
-        })
+
+        let hasError = false;
+
+        fetch(url + qs, { headers })
             .then(response => {
-                if (response.status !== 200) {
-                    throw new Error(`Failed with status code: ${response.status}`);
-                }
-                const ifNoneMatch = response.headers['If-None-Match'];
-                if (ifNoneMatch) {
-                    sessionStorage.setItem('etag', ifNoneMatch);
+                if (!(response.status !== 200)) {
+                    const etag = response.headers.get('etag');
+                    if (etag) {
+                        sessionStorage.setItem('etag', etag);
+                    }
+                } else {
+                    hasError = true;
                 }
                 return response.json();
             })
             .then(repos => {
-                this.updateRepos(repos.filter(repo => repo.fork === false && repo.language));
+                if (hasError) {
+                    throw new Error(repos.message);
+                }
+                this.feedList(repos.filter(repo => repo.fork === false && repo.language));
             })
             .catch(err => {
-                throw err;
+        console.error(err); // eslint-disable-line
             });
     };
 
@@ -65,7 +75,7 @@ export default class extends React.Component {
         const repo = this.state.repos[index];
         return (
             <div key={key}>
-                {repo.name} - {repo.language}
+                <strong>{repo.name}</strong>&nbsp;&nbsp;&lt;{repo.language}&gt;
             </div>
         );
     };
@@ -79,11 +89,11 @@ export default class extends React.Component {
             <div>
                 {this.state.isLoading && <div className="loading">Loading</div>}
                 <List
-                    length={this.state.repos.length}
-                    pageSize={PAGE_SIZE}
                     itemsRenderer={this.renderItems}
+                    hasMore={this.state.hasMore}
+                    length={this.state.repos.length}
                     onIntersection={this.handleLoadMore}
-                    threshold="0px"
+                    pageSize={PAGE_SIZE}
                 >
                     {this.renderItem}
                 </List>

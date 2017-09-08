@@ -8,7 +8,7 @@
 
 <!-- ### An Infinite Scroller List Component -->
 
-**React Intersection List** builds on top of **[React Intersection Observer](https://github.com/researchgate/react-intersection-observer)**, using `IntersectionObservers` to deliver a high-performance and smooth scrolling experience, even on low-end devices.
+**React Intersection List** builds on top of **[React Intersection Observer](https://github.com/researchgate/react-intersection-observer)**, using a [sentinel](https://en.wikipedia.org/wiki/Sentinel_value) in the DOM to deliver a high-performance and smooth scrolling experience, even on low-end devices.
 
 ## Getting Started
 
@@ -71,6 +71,8 @@ Traditional solutions to this problem rely on throttled `scroll` event callbacks
 - **itemsRenderer**: `(items: Array<React.Element<*>>, ref: Element) => React.Element<*>`
 
 - **length**: `number` | default: `0` (size of the list - the number of total items)
+
+- **hasMore**: `bool` | default: `false` (if true forces the sentinel to observe)
 
 - **threshold**: `string` | default: `100px` (specify using units _px_ or _%_ without negative values)
 

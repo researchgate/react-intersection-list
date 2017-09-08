@@ -49,7 +49,7 @@ body {
   height: 333px;
 }
 
-.list > * {
+.list > div {
   background-color: #4b9deb;
   color: #fff;
   margin: 15px;

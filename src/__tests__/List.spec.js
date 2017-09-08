@@ -60,15 +60,40 @@ describe('render items', () => {
 
     test('sentinel observes again if length is extended without re-rendering', () => {
         const tree = createTree({ length: 5, pageSize: 5 });
-        const children = tree.toJSON().children;
         const spy = jest.spyOn(tree.getInstance(), 'render');
+        expect(tree.toJSON().children.length).toBe(5);
+        tree.update(<List pageSize={5} length={20} />);
+        expect(tree.toJSON().children.length).toBe(11);
+        expect(spy).toHaveBeenCalledTimes(1);
+    });
+
+    test('sentinel observes again if pageSize is extended without re-rendering', () => {
+        const tree = createTree({ length: 100, pageSize: 10 });
+        const spy = jest.spyOn(tree.getInstance(), 'render');
+        expect(tree.toJSON().children.length).toBe(11);
+        tree.update(<List length={100} pageSize={20} />);
+        expect(tree.toJSON().children.length).toBe(31);
+        expect(spy).toHaveBeenCalledTimes(1);
+    });
+
+    test('sentinel not present if length updates from zero', () => {
+        const tree = createTree({ length: 0 });
+        const children = tree.toJSON().children;
+        expect(children).toBeNull();
+        tree.update(<List length={8} />);
+        const newChildren = tree.toJSON().children;
+        expect(newChildren.length).toBe(8);
+        expect(newChildren[newChildren.length - 1].type).toBe('div');
+    });
+
+    test('sentinel observes with hasMore bypassing the length check', () => {
+        const tree = createTree({ length: 5 });
+        const children = tree.toJSON().children;
         expect(children.length).toBe(5);
-        expect(children[children.length - 1].type).toBe('div');
-        tree.update(<List pageSize={10} length={20} />);
+        tree.update(<List length={5} hasMore />);
         const newChildren = tree.toJSON().children;
         expect(newChildren.length).toBe(6);
         expect(newChildren[newChildren.length - 1].type).toBe('sentinel');
-        expect(spy).toHaveBeenCalledTimes(1);
     });
 });
 
@@ -79,7 +104,9 @@ describe('setRootNode', () => {
     });
 
     test('ref callback does sets root node if unmounting', () => {
-        const tree = renderer.create(<List length={20} />, { createNodeMock: () => undefined });
+        const tree = renderer.create(<List length={20} />, {
+            createNodeMock: () => undefined,
+        });
         expect(tree.getInstance().setRootNode).not.toBeCalled();
     });
 
@@ -112,7 +139,10 @@ describe('handleUpdate', () => {
 
     test('calls onIntersection if size updates', () => {
         const spy = jest.fn();
-        const instance = createTree({ length: 30, onIntersection: spy }).getInstance();
+        const instance = createTree({
+            length: 30,
+            onIntersection: spy,
+        }).getInstance();
         instance.handleUpdate({ isIntersecting: false });
         instance.handleUpdate({ isIntersecting: true });
         instance.handleUpdate({ isIntersecting: true });

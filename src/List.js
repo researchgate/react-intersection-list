@@ -9,6 +9,7 @@ export default class List extends React.PureComponent {
         children: PropTypes.func,
         initialIndex: PropTypes.number,
         itemsRenderer: PropTypes.func,
+        hasMore: PropTypes.bool,
         length: PropTypes.number,
         onIntersection: PropTypes.func,
         pageSize: PropTypes.number,
@@ -20,6 +21,7 @@ export default class List extends React.PureComponent {
         children: (index, key) => <div key={key}>{index}</div>,
         initialIndex: 0,
         itemsRenderer: (items, ref) => <div ref={ref}>{items}</div>,
+        hasMore: false,
         length: 0,
         pageSize: 10,
         threshold: '100px',
@@ -29,7 +31,7 @@ export default class List extends React.PureComponent {
         super(props);
 
         this.state = {
-            size: this.computeSize(props),
+            size: this.computeSize(props.pageSize, props.length),
         };
 
         this.checkedForIntersection = false;
@@ -53,7 +55,7 @@ export default class List extends React.PureComponent {
         }
 
         if (isIntersecting) {
-            const nextSize = Math.min(size + pageSize, length);
+            const nextSize = this.computeSize(size + pageSize, length);
             this.setState({ size: nextSize });
             if (onIntersection) {
                 onIntersection(nextSize, pageSize);
@@ -61,12 +63,12 @@ export default class List extends React.PureComponent {
         }
     };
 
-    computeSize({ pageSize, length }) {
+    computeSize(pageSize, length) {
         return Math.min(pageSize, length);
     }
 
     renderItems() {
-        const { children, itemsRenderer, initialIndex, length, threshold, axis } = this.props;
+        const { children, itemsRenderer, initialIndex, length, threshold, axis, hasMore } = this.props;
         const { size } = this.state;
         const items = [];
 
@@ -75,7 +77,7 @@ export default class List extends React.PureComponent {
         }
 
         let sentinel;
-        if (size < length) {
+        if (hasMore || size < length) {
             sentinel = (
                 <Sentinel
                     key="sentinel"
@@ -93,6 +95,13 @@ export default class List extends React.PureComponent {
                 this.setRootNode(node);
             }
         });
+    }
+
+    componentWillReceiveProps({ pageSize, length }) {
+        if (this.props.pageSize !== pageSize || this.props.length !== length) {
+            const nextSize = this.computeSize(this.state.size + pageSize, length);
+            this.setState({ size: nextSize });
+        }
     }
 
     render() {
