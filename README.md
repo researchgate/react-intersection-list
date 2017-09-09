@@ -49,11 +49,11 @@ export default class MyList extends React.Component {
 }
 ```
 
-Note that as `<List>` is a `PureComponent`, so it can keep itself from re-rendering. It's highly recommended to pass referenced methods for `children` and `itemsRenderer` (in this case instance methods), so that it can successfully shallow compare props.
+Note that `<List>` is a `PureComponent` so it can keep itself from re-rendering. It's highly recommended to pass referenced methods for `children` and `itemsRenderer` (in this case instance methods), so that it can successfully shallow compare props.
 
 ## Why React Intersection List?
 
-The approach to infinite scrolling was commonly done by devs implementing throttled `scroll` event callbacks. This keeps the main thread unnecessarily busy... No more! `IntersectionObservers`' invoke callbacks in a **low-priority and asynchronous** way by design.
+The approach to infinite scrolling was commonly done by devs implementing throttled `scroll` event callbacks. This keeps the main thread unnecessarily busy... No more! `IntersectionObservers` invoke callbacks in a **low-priority and asynchronous** way by design.
 
 > **Agent Smith:** Never send a human to do a machine's job.
 
@@ -71,21 +71,21 @@ The implementation follows these steps:
 
 - **children**: `(index: number, key: number) => React.Element<*>`
 
-- **itemsRenderer**: `(items: Array<React.Element<*>>, ref: Element) => React.Element<*>`
+- **itemsRenderer**: `(items: Array<React.Element<*>>, ref: HTMLElement) => React.Element<*>`
 
 - **itemsLength**: `number` | default: `0` (number of items to render)
 
 - **hasMore**: `bool` | default: `false` (if true forces the sentinel to observe)
 
+- **onIntersection**: `(size: number, pageSize: number) => void` (invoked when the sentinel comes into view)
+
 - **threshold**: `string` | default: `100px` (specify using units _px_ or _%_ without negative values)
 
-- **axis**: `'x' | 'y'` | Default: `y`
+- **axis**: `'x' | 'y'` | default: `y`
 
-- **pageSize**: `number` | Default: `10`
+- **pageSize**: `number` | default: `10`
 
-- **initialIndex**: `number` | Default: `0`
-
-- **onIntersection**: `(size: number, pageSize: number) => void` (invoked when the sentinel comes into view)
+- **initialIndex**: `number` | default: `0`
 
 ### Examples
 
