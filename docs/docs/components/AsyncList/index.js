@@ -45,7 +45,7 @@ export default class extends React.Component {
         fetch(url + qs, { headers })
             .then(response => {
                 if (!(response.status !== 200)) {
-                    const etag = response.headers.get(`etag_${currentPage}`);
+                    const etag = response.headers.get('etag');
                     if (etag) {
                         sessionStorage.setItem(`etag_${currentPage}`, etag);
                     }
