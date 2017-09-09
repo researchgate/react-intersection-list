@@ -41,7 +41,7 @@ export default class MyList extends React.Component {
 
     render() {
         return (
-            <List length={1000} itemsRenderer={this.itemsRenderer}>
+            <List itemsLength={1000} itemsRenderer={this.itemsRenderer}>
                 {this.itemRenderer}
             </List>
         );
@@ -49,18 +49,21 @@ export default class MyList extends React.Component {
 }
 ```
 
-Note that `<List>` is always a `PureComponent`, so we're using instance methods to avoid providing new `children` and/or `itemsRenderer` when `MyList` re-renders.
+Note that as `<List>` is a `PureComponent`, so it can keep itself from re-rendering. It's highly recommended to pass referenced methods for `children` and `itemsRenderer` (in this case instance methods), so that it can successfully shallow compare props.
 
 ## Why React Intersection List?
 
-Traditional solutions to this problem rely on throttled `scroll` event callbacks. This blocks the main thread... No more! The callbacks from `IntersectionObservers` are **low-priority and asynchronous** by design.
+The approach to infinite scrolling was commonly done by devs implementing throttled `scroll` event callbacks. This keeps the main thread unnecessarily busy... No more! `IntersectionObservers`' invoke callbacks in a **low-priority and asynchronous** way by design.
 
-> **Agent Smith:** Never send a human to do a machine's job:
+> **Agent Smith:** Never send a human to do a machine's job.
+
+The implementation follows these steps:
 
 1. Add a sentinel close to the last item in the list
-2. Trigger a callback when the sentinel comes into view
-3. Update the list and reposition the recycled sentinel
-4. Repeat (∞) ?
+2. Update the list moving the internal cursor
+3. Trigger a callback when the sentinel comes into view
+4. Reposition the recycled sentinel at the end
+5. Repeat (∞) ?
 
 ## Documentation
 
@@ -70,13 +73,13 @@ Traditional solutions to this problem rely on throttled `scroll` event callbacks
 
 - **itemsRenderer**: `(items: Array<React.Element<*>>, ref: Element) => React.Element<*>`
 
-- **length**: `number` | default: `0` (size of the list - the number of total items)
+- **itemsLength**: `number` | default: `0` (number of items to render)
 
 - **hasMore**: `bool` | default: `false` (if true forces the sentinel to observe)
 
 - **threshold**: `string` | default: `100px` (specify using units _px_ or _%_ without negative values)
 
-- **axis**: `'x' | 'y'` | Default: `0`
+- **axis**: `'x' | 'y'` | Default: `y`
 
 - **pageSize**: `number` | Default: `10`
 

@@ -8,9 +8,9 @@ export default class List extends React.PureComponent {
         axis: PropTypes.oneOf(['x', 'y']),
         children: PropTypes.func,
         initialIndex: PropTypes.number,
+        itemsLength: PropTypes.number,
         itemsRenderer: PropTypes.func,
         hasMore: PropTypes.bool,
-        length: PropTypes.number,
         onIntersection: PropTypes.func,
         pageSize: PropTypes.number,
         threshold: PropTypes.string,
@@ -20,9 +20,9 @@ export default class List extends React.PureComponent {
         axis: 'y',
         children: (index, key) => <div key={key}>{index}</div>,
         initialIndex: 0,
+        itemsLength: 0,
         itemsRenderer: (items, ref) => <div ref={ref}>{items}</div>,
         hasMore: false,
-        length: 0,
         pageSize: 10,
         threshold: '100px',
     };
@@ -31,7 +31,7 @@ export default class List extends React.PureComponent {
         super(props);
 
         this.state = {
-            size: this.computeSize(props.pageSize, props.length),
+            size: this.computeSize(props.pageSize, props.itemsLength),
         };
 
         this.checkedForIntersection = false;
@@ -42,7 +42,7 @@ export default class List extends React.PureComponent {
     };
 
     handleUpdate = ({ isIntersecting }) => {
-        const { pageSize, length, onIntersection } = this.props;
+        const { pageSize, itemsLength, onIntersection } = this.props;
         const { size } = this.state;
 
         if (!this.checkedForIntersection) {
@@ -55,7 +55,7 @@ export default class List extends React.PureComponent {
         }
 
         if (isIntersecting) {
-            const nextSize = this.computeSize(size + pageSize, length);
+            const nextSize = this.computeSize(size + pageSize, itemsLength);
             this.setState({ size: nextSize });
             if (onIntersection) {
                 onIntersection(nextSize, pageSize);
@@ -63,12 +63,12 @@ export default class List extends React.PureComponent {
         }
     };
 
-    computeSize(pageSize, length) {
-        return Math.min(pageSize, length);
+    computeSize(pageSize, itemsLength) {
+        return Math.min(pageSize, itemsLength);
     }
 
     renderItems() {
-        const { children, itemsRenderer, initialIndex, length, threshold, axis, hasMore } = this.props;
+        const { children, itemsRenderer, initialIndex, itemsLength, threshold, axis, hasMore } = this.props;
         const { size } = this.state;
         const items = [];
 
@@ -77,7 +77,7 @@ export default class List extends React.PureComponent {
         }
 
         let sentinel;
-        if (hasMore || size < length) {
+        if (hasMore || size < itemsLength) {
             sentinel = (
                 <Sentinel
                     key="sentinel"
@@ -97,9 +97,9 @@ export default class List extends React.PureComponent {
         });
     }
 
-    componentWillReceiveProps({ pageSize, length }) {
-        if (this.props.pageSize !== pageSize || this.props.length !== length) {
-            const nextSize = this.computeSize(this.state.size + pageSize, length);
+    componentWillReceiveProps({ pageSize, itemsLength }) {
+        if (this.props.pageSize !== pageSize || this.props.itemsLength !== itemsLength) {
+            const nextSize = this.computeSize(this.state.size + pageSize, itemsLength);
             this.setState({ size: nextSize });
         }
     }

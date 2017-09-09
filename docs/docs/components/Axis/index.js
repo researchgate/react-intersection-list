@@ -4,13 +4,13 @@ import List from '../../../../src';
 export default () => (
     <List
         axis="x"
-        length={Infinity}
-        pageSize={40}
+        itemsLength={Infinity}
         itemsRenderer={(items, ref) => (
             <div className="list list--horizontal" ref={ref}>
                 {items}
             </div>
         )}
+        pageSize={40}
     >
         {(index, key) => <div key={key}>{index}</div>}
     </List>

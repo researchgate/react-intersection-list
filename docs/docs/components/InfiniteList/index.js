@@ -3,13 +3,13 @@ import List from '../../../../src';
 
 export default () => (
     <List
-        length={Infinity}
-        pageSize={40}
+        itemsLength={Infinity}
         itemsRenderer={(items, ref) => (
             <div className="list" ref={ref}>
                 {items}
             </div>
         )}
+        pageSize={40}
     >
         {(index, key) => <div key={key}>{index}</div>}
     </List>

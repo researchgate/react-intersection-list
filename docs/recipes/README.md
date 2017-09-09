@@ -69,8 +69,8 @@ export default class extends React.Component {
                 {this.state.isLoading && <div className="loading">Loading</div>}
                 <List
                     itemsRenderer={this.renderItems}
+                    itemsLength={this.state.repos.length}
                     hasMore={this.state.hasMore}
-                    length={this.state.repos.length}
                     onIntersection={this.handleLoadMore}
                     pageSize={PAGE_SIZE}
                 >
