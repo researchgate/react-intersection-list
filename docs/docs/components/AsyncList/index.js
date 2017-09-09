@@ -35,9 +35,9 @@ export default class extends React.Component {
         const headers = {
             'Accept-Encoding': '',
         };
-        const ifNoneMatch = sessionStorage.getItem('etag');
+        const ifNoneMatch = sessionStorage.getItem(`etag_${currentPage}`);
         if (ifNoneMatch) {
-            headers['if-none-match'] = ifNoneMatch.match(/(?:\d|[a-z])+/)[0];
+            headers['If-None-Match'] = ifNoneMatch.match(/(?:\d|[a-z])+/)[0];
         }
 
         let hasError = false;
@@ -45,9 +45,9 @@ export default class extends React.Component {
         fetch(url + qs, { headers })
             .then(response => {
                 if (!(response.status !== 200)) {
-                    const etag = response.headers.get('etag');
+                    const etag = response.headers.get(`etag_${currentPage}`);
                     if (etag) {
-                        sessionStorage.setItem('etag', etag);
+                        sessionStorage.setItem(`etag_${currentPage}`, etag);
                     }
                 } else {
                     hasError = true;
