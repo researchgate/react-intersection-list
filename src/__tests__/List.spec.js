@@ -3,14 +3,15 @@ import 'intersection-observer';
 import React from 'react';
 import renderer from 'react-test-renderer';
 import List from '../List';
-import mockSentinel from './mockSentinel';
+import mockSentinel, { mockCallback } from './mockSentinel';
 
 jest.mock('../Sentinel', () => props => {
     if (props.setRef) {
-        props.setRef(jest.fn());
+        props.setRef(mockCallback);
     }
     return mockSentinel;
 });
+
 // eslint-disable-next-line no-console
 console.error = jest.fn(err => {
     throw new Error(err);
@@ -21,6 +22,11 @@ const createTree = (props = {}) => renderer.create(<List {...props} />, { create
 
 beforeEach(() => {
     jest.clearAllMocks();
+
+    window.getComputedStyle = jest.fn(() => ({
+        overflowX: 'auto',
+        overflowY: 'auto',
+    }));
 });
 
 test('renders without crashing', () => {
@@ -35,9 +41,14 @@ describe('children', () => {
         expect(spy).lastCalledWith(9, 9);
     });
 
-    test('receives correct arguments given pageSize and initialIndex props', () => {
+    test('receives correct arguments given `pageSize` and `initialIndex` props', () => {
         const spy = jest.fn();
-        createTree({ initialIndex: 10, itemsLength: 30, pageSize: 15, children: spy });
+        createTree({
+            initialIndex: 10,
+            itemsLength: 30,
+            pageSize: 15,
+            children: spy,
+        });
         expect(spy).toHaveBeenCalledTimes(15);
         expect(spy).lastCalledWith(24, 14);
     });
@@ -58,7 +69,7 @@ describe('render items', () => {
         expect(children[children.length - 1].type).toBe('div');
     });
 
-    test('sentinel observes again if itemsLength is extended without re-rendering', () => {
+    test('sentinel observes again if `itemsLength` is extended without re-rendering', () => {
         const tree = createTree({ itemsLength: 5, pageSize: 5 });
         const spy = jest.spyOn(tree.getInstance(), 'render');
         expect(tree.toJSON().children.length).toBe(5);
@@ -76,7 +87,7 @@ describe('render items', () => {
         expect(spy).toHaveBeenCalledTimes(1);
     });
 
-    test('sentinel not present if itemsLength updates from zero', () => {
+    test('sentinel not present if `itemsLength` updates from zero', () => {
         const tree = createTree({ itemsLength: 0 });
         const children = tree.toJSON().children;
         expect(children).toBeNull();
@@ -86,11 +97,11 @@ describe('render items', () => {
         expect(newChildren[newChildren.length - 1].type).toBe('div');
     });
 
-    test('sentinel observes with hasMore bypassing the itemsLength check', () => {
+    test('sentinel observes with `awaitMore` bypassing the `itemsLength` check', () => {
         const tree = createTree({ itemsLength: 5 });
         const children = tree.toJSON().children;
         expect(children.length).toBe(5);
-        tree.update(<List itemsLength={5} hasMore />);
+        tree.update(<List itemsLength={5} awaitMore />);
         const newChildren = tree.toJSON().children;
         expect(newChildren.length).toBe(6);
         expect(newChildren[newChildren.length - 1].type).toBe('sentinel');
@@ -98,46 +109,59 @@ describe('render items', () => {
 });
 
 describe('setRootNode', () => {
-    test('ref callback sets delegated the root node', () => {
-        const tree = createTree({ itemsLength: 20 });
-        expect(tree.getInstance().setRootNode).toBeCalledWith(target);
+    test('ref callback sets root node', () => {
+        createTree({ itemsLength: 20 });
+        expect(mockCallback).toBeCalledWith(target);
     });
 
     test('ref callback does sets root node if unmounting', () => {
-        const tree = renderer.create(<List itemsLength={20} />, {
+        renderer.create(<List itemsLength={20} />, {
             createNodeMock: () => undefined,
         });
-        expect(tree.getInstance().setRootNode).not.toBeCalled();
+        expect(mockCallback).not.toBeCalled();
     });
 
     test('ref callback does sets root node without sentinel', () => {
         const tree = createTree({ itemsLength: 10 });
         expect(tree.getInstance().setRootNode).toBeUndefined();
     });
+
+    test('ref callback sets a null root if it does not have overflow', () => {
+        window.getComputedStyle = jest.fn(() => ({
+            overflowY: 'visible',
+        }));
+        createTree({ itemsLength: 20 });
+        expect(mockCallback).toBeCalledWith(null);
+    });
 });
 
 describe('handleUpdate', () => {
-    test('throws once if sentinel detects intersecting on mount', () => {
-        const instance = createTree().getInstance();
+    test('throws once if sentinel intersects items on mount', () => {
+        const instance = createTree({ itemsLength: 10 }).getInstance();
         expect(() => instance.handleUpdate({ isIntersecting: true })).toThrowErrorMatchingSnapshot();
         expect(() => instance.handleUpdate({ isIntersecting: true })).not.toThrow();
+        expect(() =>
+            createTree({ itemsLength: 0 })
+                .getInstance()
+                .handleUpdate({ isIntersecting: true }),
+        ).not.toThrow();
     });
 
-    test('sets next size value using pageSize', () => {
+    test('sets next size value using `pageSize`', () => {
         const instance = createTree({ itemsLength: 20 }).getInstance();
         instance.handleUpdate({ isIntersecting: false });
         instance.handleUpdate({ isIntersecting: true });
         expect(instance.state.size).toBe(20);
     });
 
-    test('sets next size value using itemsLength', () => {
+    test('sets next size value using `itemsLength`', () => {
         const instance = createTree({ itemsLength: 15 }).getInstance();
         instance.handleUpdate({ isIntersecting: false });
         instance.handleUpdate({ isIntersecting: true });
         expect(instance.state.size).toBe(15);
     });
 
-    test('calls onIntersection if size updates', () => {
+    test('calls `onIntersection` if size updates', () => {
         const spy = jest.fn();
         const instance = createTree({
             itemsLength: 30,
@@ -147,6 +171,22 @@ describe('handleUpdate', () => {
         instance.handleUpdate({ isIntersecting: true });
         instance.handleUpdate({ isIntersecting: true });
         expect(instance.state.size).toBe(30);
+        expect(spy).toHaveBeenCalledTimes(2);
+    });
+
+    test('calls `onIntersection` only once with `awaitMore` until size updates', () => {
+        const spy = jest.fn();
+        const tree = createTree({
+            awaitMore: true,
+            itemsLength: 10,
+            onIntersection: spy,
+        });
+        tree.getInstance().handleUpdate({ isIntersecting: false });
+        tree.getInstance().handleUpdate({ isIntersecting: true });
+        tree.getInstance().handleUpdate({ isIntersecting: true });
+        expect(tree.getInstance().state.size).toBe(10);
+        tree.update(<List awaitMore itemsLength={30} onIntersection={spy} />);
+        tree.getInstance().handleUpdate({ isIntersecting: true });
         expect(spy).toHaveBeenCalledTimes(2);
     });
 });

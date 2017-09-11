@@ -1,6 +1,6 @@
 body {
-  font-family: -apple-system, ".SFNSText-Regular", "San Francisco", Roboto,
-    "Segoe UI", "Helvetica Neue", "Lucida Grande", sans-serif;
+  font-family: -apple-system, '.SFNSText-Regular', 'San Francisco', Roboto, 'Segoe UI', 'Helvetica Neue',
+    'Lucida Grande', sans-serif;
   margin: 0;
   padding: 0;
   color: #555;
@@ -40,7 +40,7 @@ body {
   flex-direction: row;
 }
 
-.list--horizontal > * {
+.list--horizontal > div {
   min-width: 100px;
   text-align: center;
 }
@@ -56,4 +56,16 @@ body {
   padding: 15px;
   font-size: 16px;
   text-transform: capitalize;
+  cursor: default;
+  white-space: nowrap;
+}
+
+.list > div > a {
+  color: white;
+  text-decoration: none;
+  margin-right: 8px;
+}
+
+.list > div > a:hover {
+  text-decoration: underline;
 }

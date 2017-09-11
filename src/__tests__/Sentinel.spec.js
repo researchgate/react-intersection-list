@@ -47,7 +47,7 @@ describe('render', () => {
         const spy = require('@researchgate/react-intersection-observer');
         createTree();
         expect(spy.mock.calls[spy.mock.calls.length - 1][0]).toHaveProperty('disabled', true);
-        expect(spy.mock.calls[spy.mock.calls.length - 1][0]).toHaveProperty('root', null);
+        expect(spy.mock.calls[spy.mock.calls.length - 1][0]).toHaveProperty('root', undefined);
     });
 
     test('re-renders when setRef callback is called', () => {
@@ -55,7 +55,7 @@ describe('render', () => {
         const renderSpy = jest.spyOn(instance, 'render');
         const setRefMock = instance.props.setRef.mock;
         const setRefCallback = setRefMock.calls[setRefMock.calls.length - 1][0];
-        setRefCallback();
+        setRefCallback(null);
         expect(renderSpy).toHaveBeenCalledTimes(1);
     });
 

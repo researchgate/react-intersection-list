@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`handleUpdate throws once if sentinel detects intersecting on mount 1`] = `
-"Warning: The sentinel detected a very short list size. This will cause a detrimental behavior.
-Make sure to pass a sufficienly large \`pageSize\` so that the containing elements overflow your list's size"
+exports[`handleUpdate throws once if sentinel intersects items on mount 1`] = `
+"Warning: The sentinel detected a viewport with a bigger size than the size of its items. This could lead to detrimental behavior, e.g.: triggering more than one \`onIntersection\` callback at the start.
+> To prevent this, use either a bigger \`pageSize\` value or avoid using the prop \`awaitMore\` initially."
 `;

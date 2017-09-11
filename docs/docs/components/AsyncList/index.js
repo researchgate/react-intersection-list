@@ -5,23 +5,21 @@ const PAGE_SIZE = 20;
 
 export default class extends React.Component {
     state = {
-        currentPage: 0,
+        awaitMore: true,
         isLoading: false,
+        currentPage: 0,
         repos: [],
     };
 
     feedList(repos) {
         this.setState({
+            awaitMore: repos.length > 0,
             isLoading: false,
             repos: [...this.state.repos, ...repos],
-            hasMore: repos.length > 0,
         });
     }
 
     handleLoadMore = () => {
-        if (this.state.isLoading) {
-            return;
-        }
         const currentPage = this.state.currentPage + 1;
 
         this.setState({
@@ -75,23 +73,22 @@ export default class extends React.Component {
         const repo = this.state.repos[index];
         return (
             <div key={key}>
-                <strong>{repo.name}</strong>&nbsp;&nbsp;&lt;{repo.language}&gt;
+                <a href={repo.html_url} target="_blank">
+                    <strong>{repo.name}</strong>
+                </a>
+                &lt;{repo.language}&gt;
             </div>
         );
     };
-
-    componentDidMount() {
-        this.handleLoadMore();
-    }
 
     render() {
         return (
             <div>
                 {this.state.isLoading && <div className="loading">Loading</div>}
                 <List
+                    awaitMore={this.state.awaitMore}
                     itemsRenderer={this.renderItems}
                     itemsLength={this.state.repos.length}
-                    hasMore={this.state.hasMore}
                     onIntersection={this.handleLoadMore}
                     pageSize={PAGE_SIZE}
                 >

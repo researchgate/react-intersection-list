@@ -14,7 +14,7 @@ export default class Sentinel extends React.PureComponent {
         super(props);
 
         this.state = {
-            rootElement: null,
+            rootElement: undefined,
             sentinel: <sentinel style={{ height: 1, display: 'block' }} />,
             rootMargin: this.computeRootMargin(props),
         };
@@ -52,7 +52,12 @@ export default class Sentinel extends React.PureComponent {
         const { rootElement, sentinel, rootMargin } = this.state;
 
         return (
-            <Observer disabled={!rootElement} root={rootElement} rootMargin={rootMargin} onChange={onChange}>
+            <Observer
+                disabled={typeof rootElement === 'undefined'}
+                root={rootElement}
+                rootMargin={rootMargin}
+                onChange={onChange}
+            >
                 {sentinel}
             </Observer>
         );

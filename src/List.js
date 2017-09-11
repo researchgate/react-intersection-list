@@ -3,14 +3,16 @@ import PropTypes from 'prop-types';
 import warning from 'warning';
 import Sentinel from './Sentinel';
 
+const AXIS_CSS_MAP = { x: 'overflowX', y: 'overflowY' };
+
 export default class List extends React.PureComponent {
     static propTypes = {
+        awaitMore: PropTypes.bool,
         axis: PropTypes.oneOf(['x', 'y']),
         children: PropTypes.func,
         initialIndex: PropTypes.number,
         itemsLength: PropTypes.number,
         itemsRenderer: PropTypes.func,
-        hasMore: PropTypes.bool,
         onIntersection: PropTypes.func,
         pageSize: PropTypes.number,
         threshold: PropTypes.string,
@@ -22,7 +24,6 @@ export default class List extends React.PureComponent {
         initialIndex: 0,
         itemsLength: 0,
         itemsRenderer: (items, ref) => <div ref={ref}>{items}</div>,
-        hasMore: false,
         pageSize: 10,
         threshold: '100px',
     };
@@ -34,30 +35,37 @@ export default class List extends React.PureComponent {
             size: this.computeSize(props.pageSize, props.itemsLength),
         };
 
-        this.checkedForIntersection = false;
+        this.checkedForIntersection = this.state.size === 0;
     }
 
     setRef = callback => {
-        this.setRootNode = callback;
+        this.setRootNode = node => {
+            const overflow = window.getComputedStyle(node)[AXIS_CSS_MAP[this.props.axis]];
+            callback(['auto', 'scroll', 'overlay'].includes(overflow) ? node : null);
+        };
     };
 
     handleUpdate = ({ isIntersecting }) => {
-        const { pageSize, itemsLength, onIntersection } = this.props;
+        const { pageSize, itemsLength, onIntersection, awaitMore } = this.props;
         const { size } = this.state;
 
         if (!this.checkedForIntersection) {
             this.checkedForIntersection = true;
             warning(
                 !isIntersecting,
-                'The sentinel detected a very short list size. This will cause a detrimental behavior.\n' +
-                    "Make sure to pass a sufficienly large `pageSize` so that the containing elements overflow your list's size",
+                'The sentinel detected a viewport with a bigger size than the size of its items. This could lead to detrimental behavior, e.g.: triggering more than one `onIntersection` callback at the start.\n' +
+                    'To prevent this, use either a bigger `pageSize` value or avoid using the prop `awaitMore` initially.',
             );
         }
 
         if (isIntersecting) {
             const nextSize = this.computeSize(size + pageSize, itemsLength);
             this.setState({ size: nextSize });
-            if (onIntersection) {
+
+            if (onIntersection && (!awaitMore || this.awaitIntersection)) {
+                if (this.awaitIntersection) {
+                    this.awaitIntersection = false;
+                }
                 onIntersection(nextSize, pageSize);
             }
         }
@@ -68,7 +76,7 @@ export default class List extends React.PureComponent {
     }
 
     renderItems() {
-        const { children, itemsRenderer, initialIndex, itemsLength, threshold, axis, hasMore } = this.props;
+        const { children, itemsRenderer, initialIndex, itemsLength, threshold, axis, awaitMore } = this.props;
         const { size } = this.state;
         const items = [];
 
@@ -77,7 +85,7 @@ export default class List extends React.PureComponent {
         }
 
         let sentinel;
-        if (hasMore || size < itemsLength) {
+        if (size < itemsLength || awaitMore) {
             sentinel = (
                 <Sentinel
                     key="sentinel"
@@ -88,10 +96,14 @@ export default class List extends React.PureComponent {
                 />
             );
             items.push(sentinel);
+
+            if (awaitMore) {
+                this.awaitIntersection = true;
+            }
         }
 
         return itemsRenderer(items, node => {
-            if (node && sentinel && this.setRootNode) {
+            if (node && sentinel) {
                 this.setRootNode(node);
             }
         });

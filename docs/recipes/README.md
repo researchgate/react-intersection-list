@@ -2,7 +2,7 @@
 
 ### Asynchonous Repo List
 
-When the sentinel comes into view, you can use the callback to load data, create the next items, and attach them. For this case we're loading Github repositories with pagination. We assume that we don't know the total `length` and we'll want to keep fetching until the (unknown) end of the list. The solution here is to provide a computed boolean value to `hasMore`, in order to tell the sentinel to await more.
+When the sentinel comes into view, you can use the callback to load data, create the next items, and attach them. For this case we're loading Github repositories with pagination. We assume that we don't know the total `itemsLength` and we'll want to keep fetching until the (unknown) end of the list. The solution here is to pass the prop `awaitMore:bool = true`, so that the sentinel awaits for more items.
 
 ```jsx
 import React from 'react';
@@ -12,15 +12,16 @@ const PAGE_SIZE = 20;
 
 export default class extends React.Component {
     state = {
-        currentPage: 0,
+        awaitMore: true,
         isLoading: false,
+        currentPage: 0,
         repos: [],
     };
 
     feedList = (repos) => {
         this.setState({
+            awaitMore: repos.length > 0,
             isLoading: false,
-            hasMore: repos.length > 0,
             repos: [...this.state.repos, ...repos],
         });
     };
@@ -59,18 +60,14 @@ export default class extends React.Component {
         );
     };
 
-    componentDidMount() {
-        this.handleLoadMore();
-    }
-
     render() {
         return (
             <div>
                 {this.state.isLoading && <div className="loading">Loading</div>}
                 <List
+                    awaitMore={this.state.awaitMore}
                     itemsRenderer={this.renderItems}
                     itemsLength={this.state.repos.length}
-                    hasMore={this.state.hasMore}
                     onIntersection={this.handleLoadMore}
                     pageSize={PAGE_SIZE}
                 >
@@ -82,7 +79,7 @@ export default class extends React.Component {
 }
 ```
 
-If it's possible to get the total `length` in advance, we won't need `hasMore` and the `pageSize` will be used to paginate results until we reach the bottom of the list.
+If it's possible to get the total `itemsLength` in advance, we won't need `awaitMore` and the `pageSize` will be used to paginate results until we reach the bottom of the list.
 
 ### Infinite Synchronous List
 
@@ -91,7 +88,7 @@ import React from 'react';
 import List from '@researchgate/react-intersection-list';
 
 export default () => (
-    <List length={Infinity}>
+    <List itemsLength={Infinity}>
         {(index, key) => <div key={key}>{index}</div>}
     </List>
 );
