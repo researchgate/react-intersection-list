@@ -22,7 +22,7 @@ And optionally the [polyfill](https://github.com/w3c/IntersectionObserver/tree/g
 $ npm install --save intersection-observer
 ```
 
-Next create a `<List>` with two instance methods for `children` and `itemRenderer`:
+Next create a `<List>` and two instance methods as props `children` and `itemRenderer`:
 
 ```jsx
 import React from 'react';
@@ -73,17 +73,17 @@ The implementation follows these steps:
 
 - **itemsRenderer**: `(items: Array<React.Element<*>>, ref: HTMLElement) => React.Element<*>`
 
-- **itemsLength**: `number` | default: `0` (number of items to render)
+- **itemsLength**: `number` | default: `0` (number of renderable items)
 
-- **hasMore**: `bool` | default: `false` (if true forces the sentinel to observe)
+- **awaitMore**: `bool` | default: `false` (if true keeps the sentinel from detaching)
 
 - **onIntersection**: `(size: number, pageSize: number) => void` (invoked when the sentinel comes into view)
 
-- **threshold**: `string` | default: `100px` (specify using units _px_ or _%_ without negative values)
+- **threshold**: `string` | default: `100px` (specify in absolute `px` or `%` value)
 
 - **axis**: `'x' | 'y'` | default: `y`
 
-- **pageSize**: `number` | default: `10`
+- **pageSize**: `number` | default: `10` (number of items to render per page)
 
 - **initialIndex**: `number` | default: `0`
 
