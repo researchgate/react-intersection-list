@@ -9,6 +9,7 @@
   "dependencies": {
     "@researchgate/react-intersection-observer": "^0.2.0",
     "prop-types": "^15.5.10",
+    "rimraf": "^2.6.1",
     "warning": "^3.0.0"
   },
   "devDependencies": {
@@ -20,6 +21,7 @@
     "babel-cli": "^6.24.1",
     "babel-eslint": "next",
     "babel-jest": "^21.0.0",
+    "conventional-github-releaser": "^1.1.12",
     "cross-env": "^5.0.5",
     "css-loader": "^0.28.4",
     "eslint": "^4.6.1",
@@ -32,12 +34,12 @@
     "react": "^15.4.0 || ^16.0.0",
     "react-dom": "^15.4.0 || ^16.0.0",
     "react-test-renderer": "^15.6.1",
+    "standard-version": "^4.2.0",
     "style-loader": "^0.18.2",
+    "validate-commit-msg": "^2.14.0",
     "whatwg-fetch": "^2.0.3"
   },
-  "files": [
-    "lib"
-  ],
+  "files": ["lib"],
   "homepage": "https://github.com/researchgate/react-intersection-list#readme",
   "keywords": [
     "Intersection",
@@ -51,10 +53,7 @@
   ],
   "license": "MIT",
   "lint-staged": {
-    "{src,docs/docs}/**/*.js": [
-      "eslint --fix",
-      "git add"
-    ]
+    "{src,docs/docs}/**/*.js": ["eslint --fix", "git add"]
   },
   "main": "lib/js/index.js",
   "module": "lib/es/index.js",
@@ -68,19 +67,25 @@
   },
   "jest": {
     "rootDir": "src",
-    "testMatch": [
-      "**/__tests__/**/*.spec.js"
-    ]
+    "testMatch": ["**/__tests__/**/*.spec.js"]
   },
   "scripts": {
-    "build": "rm -rf lib && npm run build:js && npm run build:es",
-    "build:js": "cross-env BABEL_ENV=production BABEL_OUTPUT=cjs babel src --out-dir lib/js --ignore __tests__ --copy-files",
-    "build:es": "cross-env BABEL_ENV=production BABEL_OUTPUT=esm babel src --out-dir lib/es --ignore __tests__ --copy-files",
+    "build": "npm run build:js && npm run build:es",
+    "build:js":
+      "cross-env BABEL_ENV=production BABEL_OUTPUT=cjs babel src --out-dir lib/js --ignore __tests__ --copy-files",
+    "build:es":
+      "cross-env BABEL_ENV=production BABEL_OUTPUT=esm babel src --out-dir lib/es --ignore __tests__ --copy-files",
     "build:storybook": "build-storybook --output-dir docs",
+    "create-github-release": "conventional-github-releaser -p angular",
+    "clear": "rimraf ./lib",
+    "commitmsg": "validate-commit-msg",
+    "coverage": "yarn test -- --coverage",
     "format": "eslint --fix {src,docs/docs}/**/*.js",
     "lint": "eslint {src,docs/docs}/.",
-    "precommit": "lint-staged",
-    "prepublish": "npm run build",
+    "precommit": "yarn lint-staged && yarn test",
+    "prepare": "yarn clear && yarn build",
+    "prepublishOnly": "yarn test",
+    "release": "standard-version",
     "storybook": "start-storybook -p 9001 -c .storybook",
     "test": "jest"
   }
