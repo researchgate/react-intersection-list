@@ -42,7 +42,7 @@ Before you start your work, make sure that you:
 
 ### How to run the project
 
-Install React Intersection List as a global npm package:
+Create a clone of the repository:
 
 ```
 git clone https://github.com/researchgate/react-intersection-list.git

@@ -67,6 +67,38 @@ The implementation follows these steps:
 
 ## Documentation
 
+### How to
+
+Provided an `itemsRenderer` prop you must attach the `ref` argument to your scrollable DOM element:
+
+```jsx
+<div ref={ref}>{items}</div>
+```
+
+This element specifies `overflow: auto|scroll` and it'll become the `IntersectionObserver root`. If the `overflow` property isn't found, then `window` will be used as the `root` instead.
+
+The `<sentinel />` element is by default detached from the list when the current size reaches the available length, unless you're using `awaitMore`. In case your list is in memory and you rely on the list for incremental rendering only, the default detaching behavior suffices. If you're loading items asynchoronously on-demand, make sure to switch `awaitMore` once you reach the total `itemsLength`.
+
+### FAQ
+
+Q: Why am I receiving too many `onIntersection` callbacks
+
+We extend `React.PureComponent`, so IF the parent component re-renders, and the _props_ passed to your `<List />` don't hold the same reference anymore, the list re-renders and may accidentally be re-attaching the `<sentinel />`.
+
+Q: Do I always need to assign the `ref`?
+
+Yes, this callback is used to start up the `IntersectionObserver`.
+
+Q: What's the `threshold` value, and why does it need an _unit_?
+
+The `threshold` value is the amount of space needed before the `<sentinel />` intersects with the root. The prop transformed into a valid `rootMargin` property for the `IntersectionObserver`, depending on the `axis` you select. As a sidenote, we believe that a percentage unit works best for responsive layouts.
+
+Q: I am getting a console warning when I first load the list
+
+> The sentinel detected a viewport with a bigger size than the size of its items...
+
+The prop `pageSize` is `10` by default, so make sure you're not falling short on items when you first render the component. The idea of an infinite scrolling list is that items overflow the viewport, so that users have the impression that there're always more items available.
+
 ### Options
 
 - **children**: `(index: number, key: number) => React.Element<*>`
