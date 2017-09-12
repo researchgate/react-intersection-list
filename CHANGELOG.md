@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.1.1"></a>
+## [0.1.1](https://github.com/researchgate/react-intersection-list/compare/v0.1.0...v0.1.1) (2017-09-12)
+
+
+### Bug Fixes
+
+* **sentinel:** ensure sentinel re-observes after items render ([e6d0fa5](https://github.com/researchgate/react-intersection-list/commit/e6d0fa5))
+
+
+
 <a name="0.1.0"></a>
 # 0.1.0 (2017-09-11)
 
