@@ -147,21 +147,21 @@ describe('handleUpdate', () => {
         ).not.toThrow();
     });
 
-    test('sets next size value using `pageSize`', () => {
+    test('sets next size value computed into `pageSize`', () => {
         const instance = createTree({ itemsLength: 20 }).getInstance();
         instance.handleUpdate({ isIntersecting: false });
         instance.handleUpdate({ isIntersecting: true });
         expect(instance.state.size).toBe(20);
     });
 
-    test('sets next size value using `itemsLength`', () => {
+    test('sets next size value computed into `itemsLength`', () => {
         const instance = createTree({ itemsLength: 15 }).getInstance();
         instance.handleUpdate({ isIntersecting: false });
         instance.handleUpdate({ isIntersecting: true });
         expect(instance.state.size).toBe(15);
     });
 
-    test('calls `onIntersection` if size updates', () => {
+    test('calls `onIntersection` each time when `awaitIntersection` is falsy', () => {
         const spy = jest.fn();
         const instance = createTree({
             itemsLength: 30,
@@ -174,7 +174,7 @@ describe('handleUpdate', () => {
         expect(spy).toHaveBeenCalledTimes(2);
     });
 
-    test('calls `onIntersection` only once with `awaitMore` until size updates', () => {
+    test('calls `onIntersection` only once when `awaitIntersection` is true', () => {
         const spy = jest.fn();
         const tree = createTree({
             awaitMore: true,

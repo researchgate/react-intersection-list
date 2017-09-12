@@ -43,7 +43,7 @@ describe('constructor', () => {
 });
 
 describe('render', () => {
-    test('provides a disabled observer', () => {
+    test('first time sets a disabled observer', () => {
         const spy = require('@researchgate/react-intersection-observer');
         createTree();
         expect(spy.mock.calls[spy.mock.calls.length - 1][0]).toHaveProperty('disabled', true);
@@ -62,20 +62,25 @@ describe('render', () => {
     test('avoids re-render if new props are the same', () => {
         const tree = createTree();
         const renderSpy = jest.spyOn(tree.getInstance(), 'render');
+        const spy = jest.fn();
+        tree.getInstance().observer = {
+            reobserve: spy,
+        };
         tree.update(<Sentinel {...defaultProps} />);
         expect(renderSpy).not.toBeCalled();
+        expect(spy).toBeCalled();
     });
 });
 
 describe('compute', () => {
-    test('returns valid computeRootMargin', () => {
+    test('returns computed rootMargin', () => {
         const instance = createTree().getInstance();
         expect(instance.computeRootMargin({ threshold: '50%', axis: 'x' })).toBe('0% 50%');
         expect(instance.computeRootMargin({ threshold: '50px', axis: 'y' })).toBe('50px 0px');
         expect(instance.computeRootMargin({ threshold: '50', axis: 'y' })).toBe('50 0');
     });
 
-    test('executed receiving new axis or threshold prop', () => {
+    test('new axis or threshold props set new rootMargin', () => {
         const instance = createTree().getInstance();
         instance.componentWillReceiveProps({ ...defaultProps, axis: 'x' });
         expect(instance.state.rootMargin).toBe('0px 100px');
