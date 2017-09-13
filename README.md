@@ -97,9 +97,9 @@ Q: Do I always need to assign the `ref`?
 
 Yes, this callback is used to start up the `IntersectionObserver`.
 
-Q: What's the `threshold` value, and why does it need an _unit_?
+Q: What's the `threshold` value, and why does it need a _unit_?
 
-The `threshold` value is the amount of space needed before the `<sentinel />` intersects with the root. The prop transformed into a valid `rootMargin` property for the `IntersectionObserver`, depending on the `axis` you select. As a sidenote, we believe that a percentage unit works best for responsive layouts.
+The `threshold` value is the amount of space needed before the `<sentinel />` intersects with the root. The prop is transformed into a valid `rootMargin` property for the `IntersectionObserver`, depending on the `axis` you select. As a sidenote, we believe that a percentage unit works best for responsive layouts.
 
 Q: I am getting a console warning when I first load the list
 
