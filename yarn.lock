@@ -38,9 +38,12 @@
     eslint-config-prettier "^2.4.0"
     eslint-plugin-react "^7.3.0"
 
-"@researchgate/react-intersection-observer@^0.2.0":
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/@researchgate/react-intersection-observer/-/react-intersection-observer-0.2.0.tgz#f4a16a0dcaa660f0bf1c1801d2fb37e0a6900e21"
+"@researchgate/react-intersection-observer@^0.3.0":
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/@researchgate/react-intersection-observer/-/react-intersection-observer-0.3.0.tgz#c186a5e48993a6ab7d829150b8ad1361c0d9dda0"
+  dependencies:
+    prop-types "^15.5.10 || ^16.0.0"
+    rimraf "^2.6.1"
 
 "@storybook/addon-actions@^3.2.6":
   version "3.2.6"
@@ -5697,7 +5700,7 @@ prop-types@15.5.8:
   dependencies:
     fbjs "^0.8.9"
 
-prop-types@^15.5.10, prop-types@^15.5.4, prop-types@^15.5.6, prop-types@^15.5.8, prop-types@^15.5.9:
+prop-types@^15.5.10, "prop-types@^15.5.10 || ^16.0.0", prop-types@^15.5.4, prop-types@^15.5.6, prop-types@^15.5.8, prop-types@^15.5.9:
   version "15.5.10"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.5.10.tgz#2797dfc3126182e3a95e3dfbb2e893ddd7456154"
   dependencies:
