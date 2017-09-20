@@ -26,7 +26,7 @@
     "css-loader": "^0.28.4",
     "eslint": "^4.6.1",
     "eslint-plugin-flowtype": "^2.35.1",
-    "flow-bin": "^0.54.1",
+    "flow-bin": "^0.55.0",
     "husky": "^0.14.3",
     "intersection-observer": "^0.4.2",
     "jest": "^21.0.1",
