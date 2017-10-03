@@ -28,7 +28,7 @@
     "eslint-plugin-import": "^2.7.0",
     "eslint-plugin-prettier": "^2.3.0",
     "eslint-plugin-react": "^7.3.0",
-    "flow-bin": "^0.55.0",
+    "flow-bin": "^0.56.0",
     "husky": "^0.14.3",
     "intersection-observer": "^0.4.2",
     "jest": "^21.0.1",
