@@ -49,7 +49,7 @@ export default class MyList extends React.Component {
 
     render() {
         return (
-            <List itemsLength={1000} itemsRenderer={this.itemsRenderer}>
+            <List currentLength={1000} itemsRenderer={this.itemsRenderer}>
                 {this.itemRenderer}
             </List>
         );
@@ -85,7 +85,7 @@ Provided an `itemsRenderer` prop you must attach the `ref` argument to your scro
 
 This element specifies `overflow: auto|scroll` and it'll become the `IntersectionObserver root`. If the `overflow` property isn't found, then `window` will be used as the `root` instead.
 
-The `<sentinel />` element is by default detached from the list when the current size reaches the available length, unless you're using `awaitMore`. In case your list is in memory and you rely on the list for incremental rendering only, the default detaching behavior suffices. If you're loading items asynchoronously on-demand, make sure to switch `awaitMore` once you reach the total `itemsLength`.
+The `<sentinel />` element is by default detached from the list when the current size reaches the available length, unless you're using `awaitMore`. In case your list is in memory and you rely on the list for incremental rendering only, the default detaching behavior suffices. If you're loading items asynchoronously on-demand, make sure to switch `awaitMore` once you reach the total length.
 
 ### FAQ
 
@@ -113,7 +113,7 @@ The prop `pageSize` is `10` by default, so make sure you're not falling short on
 
 - **itemsRenderer**: `(items: Array<React.Element<*>>, ref: HTMLElement) => React.Element<*>`
 
-- **itemsLength**: `number` | default: `0` (number of renderable items)
+- **currentLength**: `number` | default: `0` (number of renderable items)
 
 - **awaitMore**: `bool` | default: `false` (if true keeps the sentinel from detaching)
 

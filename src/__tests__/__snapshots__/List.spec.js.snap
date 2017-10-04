@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`handleUpdate throws once if sentinel intersects items on mount 1`] = `
-"Warning: The sentinel detected a viewport with a bigger size than the size of its items. This could lead to detrimental behavior, e.g.: triggering more than one \`onIntersection\` callback at the start.
-To prevent this, use either a bigger \`pageSize\` value or avoid using the prop \`awaitMore\` initially."
+"Warning: the sentinel detected a viewport with a bigger size than the size of its items. This could lead to detrimental behavior, e.g.: triggering more than one onIntersection callback at the start.
+To prevent this, use either a bigger \`pageSize\` value or avoid using the prop awaitMore initially."
 `;

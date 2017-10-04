@@ -2,7 +2,7 @@
 
 ### Asynchonous Repo List
 
-When the sentinel comes into view, you can use the callback to load data, create the next items, and attach them. For this case we're loading Github repositories with pagination. We assume that we don't know the total `itemsLength` and we'll want to keep fetching until the (unknown) end of the list. The solution here is to pass the prop `awaitMore:bool = true`, so that the sentinel awaits for more items.
+When the sentinel comes into view, you can use the callback to load data, create the next items, and attach them. For this case we're loading Github repositories with pagination. We assume that we don't know the total length and we'll want to keep fetching until the (unknown) end of the list. The solution here is to pass the prop `awaitMore:bool = true`, so that the sentinel awaits for more items.
 
 ```jsx
 import React from 'react';
@@ -67,7 +67,7 @@ export default class extends React.Component {
                 <List
                     awaitMore={this.state.awaitMore}
                     itemsRenderer={this.renderItems}
-                    itemsLength={this.state.repos.length}
+                    currentLength={this.state.repos.length}
                     onIntersection={this.handleLoadMore}
                     pageSize={PAGE_SIZE}
                 >
@@ -79,7 +79,7 @@ export default class extends React.Component {
 }
 ```
 
-If it's possible to get the total `itemsLength` in advance, we won't need `awaitMore` and the `pageSize` will be used to paginate results until we reach the bottom of the list.
+If the total amount of items are prefetched and available, we won't need `awaitMore` and the `pageSize` will be used to paginate results until we reach the bottom of the list.
 
 ### Infinite Synchronous List
 
@@ -88,7 +88,7 @@ import React from 'react';
 import List from '@researchgate/react-intersection-list';
 
 export default () => (
-    <List itemsLength={Infinity}>
+    <List currentLength={Infinity}>
         {(index, key) => <div key={key}>{index}</div>}
     </List>
 );

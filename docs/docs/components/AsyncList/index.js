@@ -59,7 +59,7 @@ export default class extends React.Component {
                 this.feedList(repos.filter(repo => repo.fork === false && repo.language));
             })
             .catch(err => {
-        console.error(err); // eslint-disable-line
+                console.error(err); // eslint-disable-line
                 this.feedList([]);
             });
     };
@@ -89,7 +89,7 @@ export default class extends React.Component {
                 <List
                     awaitMore={this.state.awaitMore}
                     itemsRenderer={this.renderItems}
-                    itemsLength={this.state.repos.length}
+                    currentLength={this.state.repos.length}
                     onIntersection={this.handleLoadMore}
                     pageSize={PAGE_SIZE}
                 >

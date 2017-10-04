@@ -33,10 +33,16 @@ test('renders without crashing', () => {
     createTree();
 });
 
+test('warns about deprecated `itemsLength` prop', () => {
+    expect(() => createTree({ itemsLength: 10 })).toThrowError(
+        'Warning: itemsLength is deprecated and will be removed in the next major version. Use currentLength instead.',
+    );
+});
+
 describe('children', () => {
     test('receives correct arguments given default props', () => {
         const spy = jest.fn();
-        createTree({ itemsLength: 10, children: spy });
+        createTree({ currentLength: 10, children: spy });
         expect(spy).toHaveBeenCalledTimes(10);
         expect(spy).lastCalledWith(9, 9);
     });
@@ -45,7 +51,7 @@ describe('children', () => {
         const spy = jest.fn();
         createTree({
             initialIndex: 10,
-            itemsLength: 30,
+            currentLength: 30,
             pageSize: 15,
             children: spy,
         });
@@ -56,52 +62,52 @@ describe('children', () => {
 
 describe('render items', () => {
     test('sentinel observes if available items in view', () => {
-        const json = createTree({ itemsLength: 10, pageSize: 5 }).toJSON();
+        const json = createTree({ currentLength: 10, pageSize: 5 }).toJSON();
         const children = json.children;
         expect(children.length).toBe(6);
         expect(children[children.length - 1].type).toBe('sentinel');
     });
 
     test('sentinel gone if no items available in view', () => {
-        const json = createTree({ itemsLength: 5, pageSize: 5 }).toJSON();
+        const json = createTree({ currentLength: 5, pageSize: 5 }).toJSON();
         const children = json.children;
         expect(children.length).toBe(5);
         expect(children[children.length - 1].type).toBe('div');
     });
 
-    test('sentinel observes again if `itemsLength` is extended without re-rendering', () => {
-        const tree = createTree({ itemsLength: 5, pageSize: 5 });
+    test('sentinel observes again if `currentLength` is extended without re-rendering', () => {
+        const tree = createTree({ currentLength: 5, pageSize: 5 });
         const spy = jest.spyOn(tree.getInstance(), 'render');
         expect(tree.toJSON().children.length).toBe(5);
-        tree.update(<List pageSize={5} itemsLength={20} />);
+        tree.update(<List pageSize={5} currentLength={20} />);
         expect(tree.toJSON().children.length).toBe(11);
         expect(spy).toHaveBeenCalledTimes(1);
     });
 
     test('sentinel observes again if pageSize is extended without re-rendering', () => {
-        const tree = createTree({ itemsLength: 100, pageSize: 10 });
+        const tree = createTree({ currentLength: 100, pageSize: 10 });
         const spy = jest.spyOn(tree.getInstance(), 'render');
         expect(tree.toJSON().children.length).toBe(11);
-        tree.update(<List itemsLength={100} pageSize={20} />);
+        tree.update(<List currentLength={100} pageSize={20} />);
         expect(tree.toJSON().children.length).toBe(31);
         expect(spy).toHaveBeenCalledTimes(1);
     });
 
-    test('sentinel not present if `itemsLength` updates from zero', () => {
-        const tree = createTree({ itemsLength: 0 });
+    test('sentinel not present if `currentLength` updates from zero', () => {
+        const tree = createTree({ currentLength: 0 });
         const children = tree.toJSON().children;
         expect(children).toBeNull();
-        tree.update(<List itemsLength={8} />);
+        tree.update(<List currentLength={8} />);
         const newChildren = tree.toJSON().children;
         expect(newChildren.length).toBe(8);
         expect(newChildren[newChildren.length - 1].type).toBe('div');
     });
 
-    test('sentinel observes with `awaitMore` bypassing the `itemsLength` check', () => {
-        const tree = createTree({ itemsLength: 5 });
+    test('sentinel observes with `awaitMore` bypassing the `currentLength` check', () => {
+        const tree = createTree({ currentLength: 5 });
         const children = tree.toJSON().children;
         expect(children.length).toBe(5);
-        tree.update(<List itemsLength={5} awaitMore />);
+        tree.update(<List currentLength={5} awaitMore />);
         const newChildren = tree.toJSON().children;
         expect(newChildren.length).toBe(6);
         expect(newChildren[newChildren.length - 1].type).toBe('sentinel');
@@ -110,19 +116,19 @@ describe('render items', () => {
 
 describe('setRootNode', () => {
     test('ref callback sets root node', () => {
-        createTree({ itemsLength: 20 });
+        createTree({ currentLength: 20 });
         expect(mockCallback).toBeCalledWith(target);
     });
 
     test('ref callback does sets root node if unmounting', () => {
-        renderer.create(<List itemsLength={20} />, {
+        renderer.create(<List currentLength={20} />, {
             createNodeMock: () => undefined,
         });
         expect(mockCallback).not.toBeCalled();
     });
 
     test('ref callback does sets root node without sentinel', () => {
-        const tree = createTree({ itemsLength: 10 });
+        const tree = createTree({ currentLength: 10 });
         expect(tree.getInstance().setRootNode).toBeUndefined();
     });
 
@@ -130,32 +136,32 @@ describe('setRootNode', () => {
         window.getComputedStyle = jest.fn(() => ({
             overflowY: 'visible',
         }));
-        createTree({ itemsLength: 20 });
+        createTree({ currentLength: 20 });
         expect(mockCallback).toBeCalledWith(null);
     });
 });
 
 describe('handleUpdate', () => {
     test('throws once if sentinel intersects items on mount', () => {
-        const instance = createTree({ itemsLength: 10 }).getInstance();
+        const instance = createTree({ currentLength: 10 }).getInstance();
         expect(() => instance.handleUpdate({ isIntersecting: true })).toThrowErrorMatchingSnapshot();
         expect(() => instance.handleUpdate({ isIntersecting: true })).not.toThrow();
         expect(() =>
-            createTree({ itemsLength: 0 })
+            createTree({ currentLength: 0 })
                 .getInstance()
                 .handleUpdate({ isIntersecting: true }),
         ).not.toThrow();
     });
 
     test('sets next size value computed into `pageSize`', () => {
-        const instance = createTree({ itemsLength: 20 }).getInstance();
+        const instance = createTree({ currentLength: 20 }).getInstance();
         instance.handleUpdate({ isIntersecting: false });
         instance.handleUpdate({ isIntersecting: true });
         expect(instance.state.size).toBe(20);
     });
 
-    test('sets next size value computed into `itemsLength`', () => {
-        const instance = createTree({ itemsLength: 15 }).getInstance();
+    test('sets next size value computed into `currentLength`', () => {
+        const instance = createTree({ currentLength: 15 }).getInstance();
         instance.handleUpdate({ isIntersecting: false });
         instance.handleUpdate({ isIntersecting: true });
         expect(instance.state.size).toBe(15);
@@ -164,7 +170,7 @@ describe('handleUpdate', () => {
     test('calls `onIntersection` each time when `awaitIntersection` is falsy', () => {
         const spy = jest.fn();
         const instance = createTree({
-            itemsLength: 30,
+            currentLength: 30,
             onIntersection: spy,
         }).getInstance();
         instance.handleUpdate({ isIntersecting: false });
@@ -178,14 +184,14 @@ describe('handleUpdate', () => {
         const spy = jest.fn();
         const tree = createTree({
             awaitMore: true,
-            itemsLength: 10,
+            currentLength: 10,
             onIntersection: spy,
         });
         tree.getInstance().handleUpdate({ isIntersecting: false });
         tree.getInstance().handleUpdate({ isIntersecting: true });
         tree.getInstance().handleUpdate({ isIntersecting: true });
         expect(tree.getInstance().state.size).toBe(10);
-        tree.update(<List awaitMore itemsLength={30} onIntersection={spy} />);
+        tree.update(<List awaitMore currentLength={30} onIntersection={spy} />);
         tree.getInstance().handleUpdate({ isIntersecting: true });
         expect(spy).toHaveBeenCalledTimes(2);
     });
