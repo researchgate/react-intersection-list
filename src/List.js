@@ -38,7 +38,7 @@ export default class List extends React.PureComponent {
 
         warning(
             !props.hasOwnProperty('itemsLength'),
-            'itemsLength is deprecated and will be removed in the next major version. Use currentLength instead.',
+            'ReactIntersectionList: [deprecation] Use currentLength instead of itemsLength. This prop will be removed in the next major version.',
         );
 
         this.state = {
@@ -64,7 +64,7 @@ export default class List extends React.PureComponent {
             this.checkedForIntersection = true;
             warning(
                 !isIntersecting,
-                'the sentinel detected a viewport with a bigger size than the size of its items. ' +
+                'ReactIntersectionList: the sentinel detected a viewport with a bigger size than the size of its items. ' +
                     'This could lead to detrimental behavior, e.g.: triggering more than one onIntersection callback at the start.\n' +
                     'To prevent this, use either a bigger `pageSize` value or avoid using the prop awaitMore initially.',
             );

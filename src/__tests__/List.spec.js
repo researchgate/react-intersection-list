@@ -35,7 +35,7 @@ test('renders without crashing', () => {
 
 test('warns about deprecated `itemsLength` prop', () => {
     expect(() => createTree({ itemsLength: 10 })).toThrowError(
-        'Warning: itemsLength is deprecated and will be removed in the next major version. Use currentLength instead.',
+        'ReactIntersectionList: [deprecation] Use currentLength instead of itemsLength. This prop will be removed in the next major version.',
     );
 });
 
