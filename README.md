@@ -107,6 +107,14 @@ Q: I am getting a console warning when I first load the list
 
 The prop `pageSize` is `10` by default, so make sure you're not falling short on items when you first render the component. The idea of an infinite scrolling list is that items overflow the viewport, so that users have the impression that there're always more items available.
 
+Q: Why doesn't the list render my updated list element(s)?
+
+The list renders items based on its props. An update somewhere else in your app (or within your list item) might update your list element(s), but if your list's `currentLength` prop for instance, remains unchanged, the list prevents a re-render. Updating the entire infinite list when one of its items has changed is far from optimal. Instead, update your list items independently using internal state or something like react-redux's connect().
+
+Q: Are you planning to implement a "virtual list mode" like react-virtualized?
+
+Yes, there's already an [open issue](https://github.com/researchgate/react-intersection-list/issues/2) to implement a mode using occlusion culling.
+
 ### Options
 
 - **children**: `(index: number, key: number) => React.Element<*>`
