@@ -5,3 +5,4 @@ coverage
 docs/static
 docs/favicon*
 docs/*.html
+.DS_Store
