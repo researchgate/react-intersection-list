@@ -31,9 +31,9 @@
   dependencies:
     "@researchgate/eslint-config-rg-base" "^1.0.0"
 
-"@researchgate/react-intersection-observer@^0.3.1":
-  version "0.3.1"
-  resolved "https://registry.yarnpkg.com/@researchgate/react-intersection-observer/-/react-intersection-observer-0.3.1.tgz#189e32c85d0b3a70e12d8408aa52e89da4e8bc85"
+"@researchgate/react-intersection-observer@^0.4.0":
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/@researchgate/react-intersection-observer/-/react-intersection-observer-0.4.0.tgz#703af3398ea327ba9633718582c528b95da70ef2"
   dependencies:
     invariant "^2.2.2"
     prop-types "^15.5.10"
@@ -3246,10 +3246,6 @@ flat-cache@^1.2.1:
 flatten@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/flatten/-/flatten-1.0.2.tgz#dae46a9d78fbe25292258cc1e780a41d95c03782"
-
-flow-bin@^0.56.0:
-  version "0.56.0"
-  resolved "https://registry.yarnpkg.com/flow-bin/-/flow-bin-0.56.0.tgz#ce43092203a344ba9bf63c0cabe95d95145f6cad"
 
 for-in@^1.0.1:
   version "1.0.2"

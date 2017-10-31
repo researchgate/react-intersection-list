@@ -49,9 +49,13 @@ export default class List extends React.PureComponent {
     }
 
     setRef = callback => {
+        let prevRootNode;
         this.setRootNode = node => {
-            const overflow = window.getComputedStyle(node)[AXIS_CSS_MAP[this.props.axis]];
-            callback(['auto', 'scroll', 'overlay'].includes(overflow) ? node : null);
+            if (node !== prevRootNode) {
+                prevRootNode = node;
+                const overflow = window.getComputedStyle(node)[AXIS_CSS_MAP[this.props.axis]];
+                callback(['auto', 'scroll', 'overlay'].indexOf(overflow) !== -1 ? node : null);
+            }
         };
     };
 

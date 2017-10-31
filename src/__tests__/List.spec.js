@@ -139,6 +139,12 @@ describe('setRootNode', () => {
         createTree({ currentLength: 20 });
         expect(mockCallback).toBeCalledWith(null);
     });
+
+    test('having same root node prevents call getComputedStyle', () => {
+        const tree = createTree({ currentLength: 20 });
+        tree.getInstance().setRootNode(target);
+        expect(window.getComputedStyle).toHaveBeenCalledTimes(1);
+    });
 });
 
 describe('handleUpdate', () => {
