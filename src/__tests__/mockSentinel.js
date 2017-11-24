@@ -5,4 +5,4 @@ const mockCallback = jest.fn();
 
 export { mockCallback };
 
-export default <sentinel />;
+export default <span />;

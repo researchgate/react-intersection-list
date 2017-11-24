@@ -4,9 +4,7 @@ import React from 'react';
 import renderer from 'react-test-renderer';
 import Sentinel from '../Sentinel';
 
-jest.mock('@researchgate/react-intersection-observer', () => {
-    return jest.fn(() => null);
-});
+jest.mock('@researchgate/react-intersection-observer');
 
 const defaultProps = {
     axis: 'y',
@@ -44,7 +42,7 @@ describe('constructor', () => {
 
 describe('render', () => {
     test('first time sets a disabled observer', () => {
-        const spy = require('@researchgate/react-intersection-observer');
+        const spy = require('@researchgate/react-intersection-observer').default;
         createTree();
         expect(spy.mock.calls[spy.mock.calls.length - 1][0]).toHaveProperty('disabled', true);
         expect(spy.mock.calls[spy.mock.calls.length - 1][0]).toHaveProperty('root', undefined);

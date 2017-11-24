@@ -62,7 +62,7 @@ export default class Sentinel extends React.PureComponent {
                 rootMargin={rootMargin}
                 onChange={onChange}
             >
-                <sentinel style={{ height: 1, display: 'block' }} />
+                <span style={{ height: 1, display: 'block' }} />
             </Observer>
         );
     }

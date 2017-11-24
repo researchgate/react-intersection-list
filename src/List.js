@@ -5,10 +5,6 @@ import Sentinel from './Sentinel';
 
 const AXIS_CSS_MAP = { x: 'overflowX', y: 'overflowY' };
 
-function getLengthProp(props) {
-    return typeof props.itemsLength !== 'undefined' ? props.itemsLength || 0 : props.currentLength;
-}
-
 export default class List extends React.PureComponent {
     static propTypes = {
         awaitMore: PropTypes.bool,
@@ -16,7 +12,6 @@ export default class List extends React.PureComponent {
         children: PropTypes.func,
         initialIndex: PropTypes.number,
         currentLength: PropTypes.number,
-        itemsLength: PropTypes.number,
         itemsRenderer: PropTypes.func,
         onIntersection: PropTypes.func,
         pageSize: PropTypes.number,
@@ -36,13 +31,8 @@ export default class List extends React.PureComponent {
     constructor(props) {
         super(props);
 
-        warning(
-            !props.hasOwnProperty('itemsLength'),
-            'ReactIntersectionList: [deprecation] Use currentLength instead of itemsLength. This prop will be removed in the next major version.',
-        );
-
         this.state = {
-            size: this.computeSize(props.pageSize, getLengthProp(props)),
+            size: this.computeSize(props.pageSize, props.currentLength),
         };
 
         this.checkedForIntersection = this.state.size === 0;
@@ -60,8 +50,7 @@ export default class List extends React.PureComponent {
     };
 
     handleUpdate = ({ isIntersecting }) => {
-        const { pageSize, onIntersection, awaitMore } = this.props;
-        const currentLength = getLengthProp(this.props);
+        const { awaitMore, currentLength, onIntersection, pageSize } = this.props;
         const { size } = this.state;
 
         if (!this.checkedForIntersection) {
@@ -92,8 +81,7 @@ export default class List extends React.PureComponent {
     }
 
     renderItems() {
-        const { children, itemsRenderer, initialIndex, threshold, axis, awaitMore } = this.props;
-        const currentLength = getLengthProp(this.props);
+        const { awaitMore, axis, children, currentLength, initialIndex, itemsRenderer, threshold } = this.props;
         const { size } = this.state;
         const items = [];
 
@@ -126,9 +114,9 @@ export default class List extends React.PureComponent {
         });
     }
 
-    componentWillReceiveProps({ pageSize, ...nextProps }) {
-        const currentLength = getLengthProp(this.props);
-        const nextCurrentLength = getLengthProp(nextProps);
+    componentWillReceiveProps({ pageSize, ...rest }) {
+        const { currentLength } = this.props;
+        const nextCurrentLength = rest.currentLength;
 
         if (this.props.pageSize !== pageSize || currentLength !== nextCurrentLength) {
             const nextSize = this.computeSize(this.state.size + pageSize, nextCurrentLength);

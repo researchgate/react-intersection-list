@@ -12,11 +12,6 @@ jest.mock('../Sentinel', () => props => {
     return mockSentinel;
 });
 
-// eslint-disable-next-line no-console
-console.error = jest.fn(err => {
-    throw new Error(err);
-});
-
 const target = { nodeType: 1 };
 const createTree = (props = {}) => renderer.create(<List {...props} />, { createNodeMock: () => target });
 
@@ -31,12 +26,6 @@ beforeEach(() => {
 
 test('renders without crashing', () => {
     createTree();
-});
-
-test('warns about deprecated `itemsLength` prop', () => {
-    expect(() => createTree({ itemsLength: 10 })).toThrowError(
-        'ReactIntersectionList: [deprecation] Use currentLength instead of itemsLength. This prop will be removed in the next major version.',
-    );
 });
 
 describe('children', () => {
@@ -65,7 +54,7 @@ describe('render items', () => {
         const json = createTree({ currentLength: 10, pageSize: 5 }).toJSON();
         const children = json.children;
         expect(children.length).toBe(6);
-        expect(children[children.length - 1].type).toBe('sentinel');
+        expect(children[children.length - 1].type).toBe('span');
     });
 
     test('sentinel gone if no items available in view', () => {
@@ -110,7 +99,7 @@ describe('render items', () => {
         tree.update(<List currentLength={5} awaitMore />);
         const newChildren = tree.toJSON().children;
         expect(newChildren.length).toBe(6);
-        expect(newChildren[newChildren.length - 1].type).toBe('sentinel');
+        expect(newChildren[newChildren.length - 1].type).toBe('span');
     });
 });
 
@@ -148,15 +137,17 @@ describe('setRootNode', () => {
 });
 
 describe('handleUpdate', () => {
-    test('throws once if sentinel intersects items on mount', () => {
+    test('throws once if sentinel intersects with items on mount', () => {
+        const spy = global.spyOn(console, 'error');
         const instance = createTree({ currentLength: 10 }).getInstance();
-        expect(() => instance.handleUpdate({ isIntersecting: true })).toThrowErrorMatchingSnapshot();
-        expect(() => instance.handleUpdate({ isIntersecting: true })).not.toThrow();
-        expect(() =>
-            createTree({ currentLength: 0 })
-                .getInstance()
-                .handleUpdate({ isIntersecting: true }),
-        ).not.toThrow();
+        instance.handleUpdate({ isIntersecting: true });
+        expect(spy.calls.mostRecent().args[0]).toMatchSnapshot();
+        instance.handleUpdate({ isIntersecting: true });
+        expect(spy.calls.count()).toBe(1);
+        createTree({ currentLength: 0 })
+            .getInstance()
+            .handleUpdate({ isIntersecting: true });
+        expect(spy.calls.count()).toBe(1);
     });
 
     test('sets next size value computed into `pageSize`', () => {
