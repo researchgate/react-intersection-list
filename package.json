@@ -1,7 +1,7 @@
 {
   "name": "@researchgate/react-intersection-list",
   "description": "React List Component using the Intersection Observer API",
-  "version": "0.4.1",
+  "version": "1.0.0",
   "author": "Luis Merino <mail@luismerino.name>",
   "bugs": {
     "url": "https://github.com/researchgate/react-intersection-list/issues"
@@ -43,12 +43,26 @@
     "validate-commit-msg": "^2.14.0",
     "whatwg-fetch": "^2.0.3"
   },
-  "files": ["lib"],
+  "files": [
+    "lib"
+  ],
   "homepage": "https://github.com/researchgate/react-intersection-list#readme",
-  "keywords": ["Intersection", "Observer", "react", "component", "list", "infinite", "scrollable", "researchgate"],
+  "keywords": [
+    "Intersection",
+    "Observer",
+    "react",
+    "component",
+    "list",
+    "infinite",
+    "scrollable",
+    "researchgate"
+  ],
   "license": "MIT",
   "lint-staged": {
-    "{src,docs/docs}/**/*.js": ["eslint --fix", "git add"]
+    "{src,docs/docs}/**/*.js": [
+      "eslint --fix",
+      "git add"
+    ]
   },
   "main": "lib/js/index.js",
   "module": "lib/es/index.js",
@@ -62,15 +76,17 @@
   },
   "jest": {
     "rootDir": "src",
-    "testMatch": ["**/__tests__/**/*.spec.js"],
-    "setupFiles": ["raf/polyfill"]
+    "testMatch": [
+      "**/__tests__/**/*.spec.js"
+    ],
+    "setupFiles": [
+      "raf/polyfill"
+    ]
   },
   "scripts": {
     "build": "npm run build:js && npm run build:es",
-    "build:js":
-      "cross-env BABEL_ENV=production BABEL_OUTPUT=cjs babel src --out-dir lib/js --ignore __tests__ --copy-files",
-    "build:es":
-      "cross-env BABEL_ENV=production BABEL_OUTPUT=esm babel src --out-dir lib/es --ignore __tests__ --copy-files",
+    "build:js": "cross-env BABEL_ENV=production BABEL_OUTPUT=cjs babel src --out-dir lib/js --ignore __tests__ --copy-files",
+    "build:es": "cross-env BABEL_ENV=production BABEL_OUTPUT=esm babel src --out-dir lib/es --ignore __tests__ --copy-files",
     "build:storybook": "build-storybook --output-dir docs",
     "create-github-release": "conventional-github-releaser -p angular",
     "clear": "rimraf ./lib",

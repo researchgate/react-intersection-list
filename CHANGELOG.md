@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.0.0"></a>
+# [1.0.0](https://github.com/researchgate/react-intersection-list/compare/v0.4.1...v1.0.0) (2017-11-24)
+
+
+### Features
+
+* **React16:** support for React 16 ([12ba423](https://github.com/researchgate/react-intersection-list/commit/12ba423))
+* **setRootNode:** save call to getComputedStyle if root node is unchanged ([80659dd](https://github.com/researchgate/react-intersection-list/commit/80659dd))
+
+
+### BREAKING CHANGES
+
+* **React16:** <sentinel> tag replaced by a <span> tag.
+* **React16:** deprecation warning will not longer appear for itemsLength prop.
+
+
+
 <a name="0.4.1"></a>
 ## [0.4.1](https://github.com/researchgate/react-intersection-list/compare/v0.4.0...v0.4.1) (2017-10-11)
 
