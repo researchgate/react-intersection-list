@@ -36,10 +36,10 @@ $ npm install --save intersection-observer
 Next create a `<List>` and two instance methods as props `children` and `itemRenderer`:
 
 ```jsx
-import React from 'react';
+import React, { Component } from 'react';
 import List from '@researchgate/react-intersection-list';
 
-export default class MyList extends React.Component {
+export default class InfiniteList extends Component {
     itemsRenderer = (items, ref) => (
         <ul className="list" ref={ref}>
             {items}
@@ -49,18 +49,14 @@ export default class MyList extends React.Component {
     itemRenderer = (index, key) => <li key={key}>{index}</li>;
 
     render() {
-        return (
-            <List currentLength={1000} itemsRenderer={this.itemsRenderer}>
-                {this.itemRenderer}
-            </List>
-        );
+        return <List itemCount={1000} itemsRenderer={this.itemsRenderer} renderItem={this.itemRenderer} />;
     }
 }
 ```
 
-Note that `<List>` is a `PureComponent` so it can keep itself from re-rendering. It's highly recommended to pass
-referenced methods for `children` and `itemsRenderer` (in this case instance methods), so that it can successfully
-shallow compare props.
+Note that `<List>` is a `PureComponent` so it can keep itself from re-rendering. It's highly recommended to avoid
+creating new functions for `renderItem` and `itemsRenderer` so that it can successfully shallow compare props on
+re-render.
 
 ## Why React Intersection List?
 
@@ -93,59 +89,65 @@ property isn't found, then `window` will be used as the `root` instead.
 
 The `sentinel` element is by default detached from the list when the current size reaches the available length, unless
 you're using `awaitMore`. In case your list is in memory and you rely on the list for incremental rendering only, the
-default detaching behavior suffices. If you're loading items asynchoronously on-demand, make sure to switch `awaitMore`
-once you reach the total length.
+default detaching behavior suffices. If you're loading more items in an asynchoronous way, make sure you switch
+`awaitMore` once you reach the total length (bottom of the list).
+
+The prop `itemCount` must be used if the prop `items` is not provided, and viceversa. Calculating the list size is done
+by adding the current size and the page size until the items' length is reached.
 
 ### FAQ
 
-Q: Why am I receiving too many `onIntersection` callbacks
-
-We extend `React.PureComponent`, so IF the parent component re-renders, and the _props_ passed to your `<List />` don't
-hold the same reference anymore, the list re-renders and may accidentally be re-attaching the `sentinel`.
-
-Q: Do I always need to assign the `ref`?
-
-Yes, this callback is used to start up the `IntersectionObserver`.
-
-Q: What's the `threshold` value, and why does it need a _unit_?
-
-The `threshold` value is the amount of space needed before the `sentinel` intersects with the root. The prop is
+<details>
+  <summary>Why am I receiving too many `onIntersection` callbacks</summary>
+  We extend `PureComponent`. That means, if the parent component re-renders and the _props_ passed to your `<List />` don't
+hold the same reference anymore, the list re-renders and we accidentally restart the `IntersectionObserver` of the `Sentinel`.
+</details>
+<br />
+<details>
+  <summary>Do I always need to assign the `ref`?</summary>
+  Yes, the ref callback will be used as the `root` and is forwarded to the `IntersectionObserver` within the `Sentinel`.
+</details>
+<br />
+<details>
+  <summary>What's the `threshold` value, and why does it need a _unit_?</summary>
+  The `threshold` value is the amount of space needed before the `sentinel` intersects with the root. The prop is
 transformed into a valid `rootMargin` property for the `IntersectionObserver`, depending on the `axis` you select. As a
 sidenote, we believe that a percentage unit works best for responsive layouts.
-
-Q: I am getting a console warning when I first load the list
-
-> The sentinel detected a viewport with a bigger size than the size of its items...
-
+</details>
+<br />
+<details>
+  <summary>I am getting a console warning when I first load the list</summary>
+  <blockquote>The sentinel detected a viewport with a bigger size than the size of its items...</blockquote>
 The prop `pageSize` is `10` by default, so make sure you're not falling short on items when you first render the
-component. The idea of an infinite scrolling list is that items overflow the viewport, so that users have the impression
-that there're always more items available.
-
-Q: Why doesn't the list render my updated list element(s)?
-
-The list renders items based on its props. An update somewhere else in your app (or within your list item) might update
+component. The idea of an infinite scrolling list is that items overflow the viewport, so that users have the impression that there're always more items available.
+</details>
+<br />
+<details>
+  <summary>Why doesn't the list render my updated list element(s)?</summary>
+  The list renders items based on its props. An update somewhere else in your app (or within your list item) might update
 your list element(s), but if your list's `currentLength` prop for instance, remains unchanged, the list prevents a
-re-render. Updating the entire infinite list when one of its items has changed is far from optimal. Instead, update your
-list items independently using internal state or something like react-redux's connect().
-
-Q: Are you planning to implement a "virtual list mode" like react-virtualized?
-
-Yes, there's already an [open issue](https://github.com/researchgate/react-intersection-list/issues/2) to implement a
-mode using occlusion culling.
+re-render. Updating the entire infinite list when one of its items has changed is far from optimal. Instead, update each item individually with some form of `connect()` function or observables.
+</details>
+<br />
+<details>
+  <summary>Are you planning to implement a "virtual list mode" like react-virtualized?</summary>
+  Yes, there's already an [open issue](https://github.com/researchgate/react-intersection-list/issues/2) to implement a
+mode using occlusion culling. It will be implemented in a future release. If you can't wait, you could help us out by opening a Pull Request :)
+</details>
 
 ### Props
 
-| property         | type                                                               | default                                        | description                                                                                             |
-| ---------------- | ------------------------------------------------------------------ | ---------------------------------------------- | ------------------------------------------------------------------------------------------------------- |
-| `children`       | `(index: number, key: number) => React.Element`                    | `(index, key) => <div key={key}>{index}</div>` | render function as children;<br />gets call once for each item.                                         |
-| `itemsRenderer`  | `(items: Array(React.Element), ref: HTMLElement) => React.Element` | `(items, ref) => <div ref={ref}>{items}</div>` | render function for the list's<br />root element, often returning a scrollable element.                 |
-| `currentLength`  | `number`                                                           | `0`                                            | item count to render.                                                                                   |
-| `awaitMore`      | `boolean`                                                          |                                                | if true keeps the sentinel from detaching.                                                              |
-| `onIntersection` | `(size: number, pageSize: number) => void`                         |                                                | invoked when the sentinel comes into view.                                                              |
-| `threshold`      | `string`                                                           | `100px`                                        | value in absolute `px` or `%`<br />as spacing before the sentinel hits the edge of the list's viewport. |
-| `axis`           | `string`                                                           | `y`                                            | scroll direction: `y` == vertical and `x` == horizontal                                                 |
-| `pageSize`       | `number`                                                           | `10`                                           | number of items to render each hit.                                                                     |
-| `initialIndex`   | `number`                                                           | `0`                                            | start position of iterator of items.                                                                    |
+| property              | type                                                               | default                                        | description                                                                                             |
+| --------------------- | ------------------------------------------------------------------ | ---------------------------------------------- | ------------------------------------------------------------------------------------------------------- |
+| `renderItem|children` | `(index: number, key: number) => React.Element`                    | `(index, key) => <div key={key}>{index}</div>` | render function as children or render props;<br />gets call once for each item.                         |
+| `itemsRenderer`       | `(items: Array(React.Element), ref: HTMLElement) => React.Element` | `(items, ref) => <div ref={ref}>{items}</div>` | render function for the list's<br />root element, often returning a scrollable element.                 |
+| `itemCount|items`     | `number | Array (or Iterable Object)`                              | `0`                                            | item count to render.                                                                                   |
+| `awaitMore`           | `boolean`                                                          |                                                | if true keeps the sentinel from detaching.                                                              |
+| `onIntersection`      | `(size: number, pageSize: number) => void`                         |                                                | invoked when the sentinel comes into view.                                                              |
+| `threshold`           | `string`                                                           | `100px`                                        | value in absolute `px` or `%`<br />as spacing before the sentinel hits the edge of the list's viewport. |
+| `axis`                | `string`                                                           | `y`                                            | scroll direction: `y` == vertical and `x` == horizontal                                                 |
+| `pageSize`            | `number`                                                           | `10`                                           | number of items to render each hit.                                                                     |
+| `initialIndex`        | `number`                                                           | `0`                                            | start position of iterator of items.                                                                    |
 
 ### Examples
 

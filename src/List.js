@@ -1,28 +1,36 @@
-import React from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import warning from 'warning';
 import Sentinel from './Sentinel';
 
 const AXIS_CSS_MAP = { x: 'overflowX', y: 'overflowY' };
 
-export default class List extends React.PureComponent {
+export default class List extends PureComponent {
     static propTypes = {
         awaitMore: PropTypes.bool,
         axis: PropTypes.oneOf(['x', 'y']),
         children: PropTypes.func,
         initialIndex: PropTypes.number,
-        currentLength: PropTypes.number,
+        items(props, propName) {
+            const object = props[propName];
+            if (object != null && !(Array.isArray(object) || typeof object[Symbol.iterator] === 'function')) {
+                return new Error(
+                    `\`${propName}\` must be of type Array or a native type implementing the iterable interface`,
+                );
+            }
+            return undefined;
+        },
+        itemCount: PropTypes.number,
         itemsRenderer: PropTypes.func,
         onIntersection: PropTypes.func,
         pageSize: PropTypes.number,
+        renderItem: PropTypes.func,
         threshold: PropTypes.string,
     };
 
     static defaultProps = {
         axis: 'y',
-        children: (index, key) => <div key={key}>{index}</div>,
         initialIndex: 0,
-        currentLength: 0,
         itemsRenderer: (items, ref) => <div ref={ref}>{items}</div>,
         pageSize: 10,
         threshold: '100px',
@@ -32,10 +40,10 @@ export default class List extends React.PureComponent {
         super(props);
 
         this.state = {
-            size: this.computeSize(props.pageSize, props.currentLength),
+            size: this.computeSize(props.pageSize, this.getItemCount(props)),
         };
 
-        this.checkedForIntersection = this.state.size === 0;
+        this.prematureIntersectionChecked = this.state.size === 0;
     }
 
     setRef = callback => {
@@ -50,11 +58,11 @@ export default class List extends React.PureComponent {
     };
 
     handleUpdate = ({ isIntersecting }) => {
-        const { awaitMore, currentLength, onIntersection, pageSize } = this.props;
+        const { awaitMore, onIntersection, pageSize } = this.props;
         const { size } = this.state;
 
-        if (!this.checkedForIntersection) {
-            this.checkedForIntersection = true;
+        if (!this.prematureIntersectionChecked) {
+            this.prematureIntersectionChecked = true;
             warning(
                 !isIntersecting,
                 'ReactIntersectionList: the sentinel detected a viewport with a bigger size than the size of its items. ' +
@@ -64,9 +72,10 @@ export default class List extends React.PureComponent {
         }
 
         if (isIntersecting) {
-            const nextSize = this.computeSize(size + pageSize, currentLength);
-            this.setState({ size: nextSize });
-
+            const nextSize = this.computeSize(size + pageSize, this.getItemCount(this.props));
+            if (this.state.size !== nextSize) {
+                this.setState({ size: nextSize });
+            }
             if (onIntersection && (!awaitMore || this.awaitIntersection)) {
                 if (this.awaitIntersection) {
                     this.awaitIntersection = false;
@@ -76,21 +85,56 @@ export default class List extends React.PureComponent {
         }
     };
 
-    computeSize(pageSize, currentLength) {
-        return Math.min(pageSize, currentLength);
+    computeSize(pageSize, itemCount) {
+        return Math.min(pageSize, itemCount);
+    }
+
+    getItemCount({ itemCount, items }) {
+        const hasItemCount = typeof itemCount !== 'undefined';
+        const hasItems = typeof items !== 'undefined';
+        const defaultValue = 0;
+
+        warning(
+            !(hasItemCount && hasItems),
+            'ReactIntersectionList: cannot use itemCount and items props at the same time, choose one to determine the number of items to render.',
+        );
+
+        if (hasItemCount) {
+            return itemCount;
+        }
+
+        return hasItems ? items.length || items.size || defaultValue : defaultValue;
+    }
+
+    getItemRenderer() {
+        const { children, renderItem } = this.props;
+        const hasChildren = typeof children !== 'undefined';
+        const hasRender = typeof renderItem !== 'undefined';
+
+        warning(
+            !(hasChildren && hasRender),
+            'ReactIntersectionList: cannot use children and renderItem props as render function at the same time.',
+        );
+
+        if (hasChildren) {
+            return children;
+        }
+
+        return hasRender ? renderItem : (index, key) => <div key={key}>{index}</div>;
     }
 
     renderItems() {
-        const { awaitMore, axis, children, currentLength, initialIndex, itemsRenderer, threshold } = this.props;
+        const { awaitMore, axis, initialIndex, itemsRenderer, threshold } = this.props;
         const { size } = this.state;
+        const itemRenderer = this.getItemRenderer();
         const items = [];
 
         for (let i = 0; i < size; ++i) {
-            items.push(children(initialIndex + i, i));
+            items.push(itemRenderer(initialIndex + i, i));
         }
 
         let sentinel;
-        if (size < currentLength || awaitMore) {
+        if (size < this.getItemCount(this.props) || awaitMore) {
             sentinel = (
                 <Sentinel
                     key="sentinel"
@@ -115,11 +159,11 @@ export default class List extends React.PureComponent {
     }
 
     componentWillReceiveProps({ pageSize, ...rest }) {
-        const { currentLength } = this.props;
-        const nextCurrentLength = rest.currentLength;
+        const itemCount = this.getItemCount(this.props);
+        const nextItemCount = this.getItemCount(rest);
 
-        if (this.props.pageSize !== pageSize || currentLength !== nextCurrentLength) {
-            const nextSize = this.computeSize(this.state.size + pageSize, nextCurrentLength);
+        if (this.props.pageSize !== pageSize || itemCount !== nextItemCount) {
+            const nextSize = this.computeSize(this.state.size + pageSize, nextItemCount);
             this.setState({ size: nextSize });
         }
     }

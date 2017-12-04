@@ -8,4 +8,6 @@ const itemsRenderer = (items, ref) => (
 );
 
 // eslint-disable-next-line react/no-multi-comp
-export default () => <List axis="x" currentLength={Infinity} itemsRenderer={itemsRenderer} pageSize={40} />;
+const Axis = () => <List axis="x" itemCount={Infinity} itemsRenderer={itemsRenderer} pageSize={40} />;
+
+export default Axis;
