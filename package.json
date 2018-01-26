@@ -39,7 +39,7 @@
     "react-test-renderer": "^16.1.1",
     "rimraf": "^2.6.1",
     "standard-version": "^4.2.0",
-    "style-loader": "^0.19.0",
+    "style-loader": "^0.20.0",
     "validate-commit-msg": "^2.14.0",
     "whatwg-fetch": "^2.0.3"
   },
