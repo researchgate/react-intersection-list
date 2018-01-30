@@ -7,7 +7,7 @@
     "url": "https://github.com/researchgate/react-intersection-list/issues"
   },
   "dependencies": {
-    "@researchgate/react-intersection-observer": "^0.5.0",
+    "@researchgate/react-intersection-observer": "^0.6.0",
     "prop-types": "^15.6.0",
     "warning": "^3.0.0"
   },
