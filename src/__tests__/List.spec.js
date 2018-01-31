@@ -96,7 +96,7 @@ describe('render items', () => {
         const tree = createTree({ currentLength: 5 });
         const children = tree.toJSON().children;
         expect(children.length).toBe(5);
-        tree.update(<List currentLength={5} awaitMore />);
+        tree.update(<List currentLength={5} awaitMore={true} />);
         const newChildren = tree.toJSON().children;
         expect(newChildren.length).toBe(6);
         expect(newChildren[newChildren.length - 1].type).toBe('span');
@@ -188,7 +188,7 @@ describe('handleUpdate', () => {
         tree.getInstance().handleUpdate({ isIntersecting: true });
         tree.getInstance().handleUpdate({ isIntersecting: true });
         expect(tree.getInstance().state.size).toBe(10);
-        tree.update(<List awaitMore currentLength={30} onIntersection={spy} />);
+        tree.update(<List awaitMore={true} currentLength={30} onIntersection={spy} />);
         tree.getInstance().handleUpdate({ isIntersecting: true });
         expect(spy).toHaveBeenCalledTimes(2);
     });
