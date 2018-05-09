@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="2.0.0"></a>
+# [2.0.0](https://github.com/researchgate/react-intersection-list/compare/v1.0.2...v2.0.0) (2018-05-09)
+
+
+### Features
+
+* **prop_api_update:** introducing API for 2.0.0 ([276ca7b](https://github.com/researchgate/react-intersection-list/commit/276ca7b))
+
+
+### BREAKING CHANGES
+
+* **prop_api_update:** * Replace `currentLength` with more descriptive `itemCount` prop
+* New render prop `renderItem` to completement `children` as render prop
+* New prop `items` as a unique identifier/symbol to provide an easier integration of reusable lists
+* TypeScript Module definitions
+
+
+
 <a name="1.0.2"></a>
 ## [1.0.2](https://github.com/researchgate/react-intersection-list/compare/v1.0.1...v1.0.2) (2018-04-12)
 
