@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { Component } from 'react';
 import List from '../../../../src';
 
 const PAGE_SIZE = 20;
 
-export default class extends React.Component {
+export default class AsyncList extends Component {
     state = {
         awaitMore: true,
         isLoading: false,
@@ -89,12 +89,11 @@ export default class extends React.Component {
                 <List
                     awaitMore={this.state.awaitMore}
                     itemsRenderer={this.renderItems}
-                    currentLength={this.state.repos.length}
+                    itemCount={this.state.repos.length}
                     onIntersection={this.handleLoadMore}
                     pageSize={PAGE_SIZE}
-                >
-                    {this.renderItem}
-                </List>
+                    renderItem={this.renderItem}
+                />
             </div>
         );
     }
