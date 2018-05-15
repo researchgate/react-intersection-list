@@ -1,11 +1,13 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import { polyfill } from 'react-lifecycles-compat';
 import warning from 'warning';
 import Sentinel from './Sentinel';
+import { getItemCount, computeSize } from './utils';
 
 const AXIS_CSS_MAP = { x: 'overflowX', y: 'overflowY' };
 
-export default class List extends PureComponent {
+class List extends PureComponent {
     static propTypes = {
         awaitMore: PropTypes.bool,
         axis: PropTypes.oneOf(['x', 'y']),
@@ -36,13 +38,32 @@ export default class List extends PureComponent {
         threshold: '100px',
     };
 
-    constructor(props) {
-        super(props);
+    state = {
+        size: 0,
+    };
 
-        this.state = {
-            size: this.computeSize(props.pageSize, this.getItemCount(props)),
+    static getDerivedStateFromProps({ pageSize, ...props }, prevState) {
+        const itemCount = getItemCount(props, true);
+
+        let newSize;
+        if (prevState.size === 0) {
+            newSize = pageSize;
+        } else {
+            if (prevState.itemCount < itemCount) {
+                newSize = prevState.size + pageSize;
+            } else {
+                newSize = prevState.size + -(prevState.pageSize - pageSize);
+            }
+        }
+
+        return {
+            pageSize,
+            itemCount,
+            size: computeSize(newSize, itemCount),
         };
+    }
 
+    componentDidMount() {
         this.prematureIntersectionChecked = this.state.size === 0;
     }
 
@@ -58,8 +79,8 @@ export default class List extends PureComponent {
     };
 
     handleUpdate = ({ isIntersecting }) => {
-        const { awaitMore, onIntersection, pageSize } = this.props;
-        const { size } = this.state;
+        const { awaitMore, onIntersection } = this.props;
+        const { size, itemCount, pageSize } = this.state;
 
         if (!this.prematureIntersectionChecked) {
             this.prematureIntersectionChecked = true;
@@ -72,8 +93,8 @@ export default class List extends PureComponent {
         }
 
         if (isIntersecting) {
-            const nextSize = this.computeSize(size + pageSize, this.getItemCount(this.props));
-            if (this.state.size !== nextSize) {
+            const nextSize = computeSize(size + pageSize, itemCount);
+            if (size !== nextSize) {
                 this.setState({ size: nextSize });
             }
             if (onIntersection && (!awaitMore || this.awaitIntersection)) {
@@ -84,27 +105,6 @@ export default class List extends PureComponent {
             }
         }
     };
-
-    computeSize(pageSize, itemCount) {
-        return Math.min(pageSize, itemCount);
-    }
-
-    getItemCount({ itemCount, items }) {
-        const hasItemCount = typeof itemCount !== 'undefined';
-        const hasItems = typeof items !== 'undefined';
-        const defaultValue = 0;
-
-        warning(
-            !(hasItemCount && hasItems),
-            'ReactIntersectionList: cannot use itemCount and items props at the same time, choose one to determine the number of items to render.',
-        );
-
-        if (hasItemCount) {
-            return itemCount;
-        }
-
-        return hasItems ? items.length || items.size || defaultValue : defaultValue;
-    }
 
     getItemRenderer() {
         const { children, renderItem } = this.props;
@@ -125,7 +125,7 @@ export default class List extends PureComponent {
 
     renderItems() {
         const { awaitMore, axis, initialIndex, itemsRenderer, threshold } = this.props;
-        const { size } = this.state;
+        const { size, itemCount } = this.state;
         const itemRenderer = this.getItemRenderer();
         const items = [];
 
@@ -134,7 +134,7 @@ export default class List extends PureComponent {
         }
 
         let sentinel;
-        if (size < this.getItemCount(this.props) || awaitMore) {
+        if (size < itemCount || awaitMore) {
             sentinel = (
                 <Sentinel
                     key="sentinel"
@@ -158,17 +158,12 @@ export default class List extends PureComponent {
         });
     }
 
-    componentWillReceiveProps({ pageSize, ...rest }) {
-        const itemCount = this.getItemCount(this.props);
-        const nextItemCount = this.getItemCount(rest);
-
-        if (this.props.pageSize !== pageSize || itemCount !== nextItemCount) {
-            const nextSize = this.computeSize(this.state.size + pageSize, nextItemCount);
-            this.setState({ size: nextSize });
-        }
-    }
-
     render() {
         return this.renderItems();
     }
 }
+
+// Polyfill your component so the new lifecycles will work with older versions of React:
+polyfill(List);
+
+export default List;

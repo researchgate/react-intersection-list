@@ -3,6 +3,7 @@ import 'intersection-observer';
 import React from 'react';
 import renderer from 'react-test-renderer';
 import Sentinel from '../Sentinel';
+import { computeRootMargin } from '../utils';
 
 jest.mock('@researchgate/react-intersection-observer');
 
@@ -26,17 +27,23 @@ describe('constructor', () => {
     });
 
     test('calls computeRootMargin and setRef', () => {
-        const impl = () => {};
-        const renderSpy = jest.spyOn(Sentinel.prototype, 'render').mockImplementation(impl);
-        const spy = jest.spyOn(Sentinel.prototype, 'computeRootMargin').mockImplementation(impl);
-        const mock = jest.fn();
-        const props = { setRef: mock };
-        const component = <Sentinel {...props} />;
-        const tree = renderer.create(component);
-        expect(spy).toBeCalledWith(props);
-        expect(mock).toBeCalledWith(tree.getInstance().setRootElement);
-        spy.mockRestore();
-        renderSpy.mockRestore();
+        const utils = require('../utils');
+        const original = utils.computeRootMargin;
+        const computeRootMarginSpy = jest.fn();
+        utils.computeRootMargin = computeRootMarginSpy;
+        const TestSentinel = require('../Sentinel').default;
+        const renderMock = jest.spyOn(TestSentinel.prototype, 'render').mockImplementation(() => {});
+        const setRefMock = jest.fn();
+        const props = { setRef: setRefMock };
+        const tree = renderer.create(<TestSentinel {...props} />);
+
+        expect(computeRootMarginSpy).toBeCalledWith(props);
+        expect(setRefMock).toBeCalledWith(tree.getInstance().setRootElement);
+
+        computeRootMarginSpy.mockRestore();
+        renderMock.mockRestore();
+
+        utils.computeRootMargin = original;
     });
 });
 
@@ -61,7 +68,7 @@ describe('render', () => {
         const tree = createTree();
         const renderSpy = jest.spyOn(tree.getInstance(), 'render');
         const spy = jest.fn();
-        tree.getInstance().observer = {
+        tree.getInstance().element = {
             reobserve: spy,
         };
         tree.update(<Sentinel {...defaultProps} />);
@@ -72,17 +79,22 @@ describe('render', () => {
 
 describe('compute', () => {
     test('returns computed rootMargin', () => {
-        const instance = createTree().getInstance();
-        expect(instance.computeRootMargin({ threshold: '50%', axis: 'x' })).toBe('0% 50%');
-        expect(instance.computeRootMargin({ threshold: '50px', axis: 'y' })).toBe('50px 0px');
-        expect(instance.computeRootMargin({ threshold: '50', axis: 'y' })).toBe('50 0');
+        expect(computeRootMargin({ threshold: '50%', axis: 'x' })).toBe('0% 50%');
+        expect(computeRootMargin({ threshold: '50px', axis: 'y' })).toBe('50px 0px');
+        expect(computeRootMargin({ threshold: '50', axis: 'y' })).toBe('50 0');
     });
 
-    test('new axis or threshold props set new rootMargin', () => {
-        const instance = createTree().getInstance();
-        instance.componentWillReceiveProps({ ...defaultProps, axis: 'x' });
-        expect(instance.state.rootMargin).toBe('0px 100px');
-        instance.componentWillReceiveProps({ ...defaultProps, threshold: '200px' });
-        expect(instance.state.rootMargin).toBe('200px 0px');
+    test('new axis or threshold props update rootMargin', () => {
+        const tree = createTree();
+        const instance = tree.getInstance();
+        let prevRootMargin = instance.state.rootMargin;
+
+        tree.update(<Sentinel {...{ ...defaultProps, axis: 'x' }} />);
+        expect(prevRootMargin).not.toBe(instance.state.rootMargin);
+
+        prevRootMargin = instance.state.rootMargin;
+
+        tree.update(<Sentinel {...{ ...defaultProps, threshold: '200px' }} />);
+        expect(prevRootMargin).not.toBe(instance.state.rootMargin);
     });
 });
