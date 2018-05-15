@@ -1,7 +1,7 @@
 {
   "name": "@researchgate/react-intersection-list",
   "description": "React List Component using the Intersection Observer API",
-  "version": "2.0.0",
+  "version": "3.0.0",
   "author": "Luis Merino <mail@luismerino.name>",
   "bugs": {
     "url": "https://github.com/researchgate/react-intersection-list/issues"
