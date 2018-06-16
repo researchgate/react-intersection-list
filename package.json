@@ -10,7 +10,7 @@
     "@researchgate/react-intersection-observer": "^0.7.1",
     "prop-types": "^15.6.1",
     "react-lifecycles-compat": "^3.0.4",
-    "warning": "^3.0.0"
+    "warning": "^4.0.1"
   },
   "devDependencies": {
     "@researchgate/babel-preset-rg": "^1.0.1",
