@@ -43,7 +43,8 @@ class Sentinel extends Component {
         // its threshold prematurely. In this case we don't get any update from the Observer instance.
         // We need to guarantee an update, and re-observing is a cheap way to accomplish this.
         if (currentRootMargin === rootMargin && currentRootElement === rootElement) {
-            this.element.reobserve();
+            this.element.unobserve();
+            this.element.observe();
             return false;
         }
         return true;

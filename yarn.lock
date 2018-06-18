@@ -91,9 +91,9 @@
   dependencies:
     "@researchgate/eslint-config-rg-base" "^2.0.0"
 
-"@researchgate/react-intersection-observer@^0.7.1":
-  version "0.7.1"
-  resolved "https://registry.yarnpkg.com/@researchgate/react-intersection-observer/-/react-intersection-observer-0.7.1.tgz#c63d0d133d9f121fc34d5019dd5a0a4d3c87f32a"
+"@researchgate/react-intersection-observer@^0.7.3":
+  version "0.7.3"
+  resolved "https://registry.yarnpkg.com/@researchgate/react-intersection-observer/-/react-intersection-observer-0.7.3.tgz#cef70feae9ccb33d5104fa8bf4c8c3ddc049d5fa"
   dependencies:
     invariant "^2.2.2"
     prop-types "^15.6.0"

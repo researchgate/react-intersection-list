@@ -69,7 +69,8 @@ describe('render', () => {
         const renderSpy = jest.spyOn(tree.getInstance(), 'render');
         const spy = jest.fn();
         tree.getInstance().element = {
-            reobserve: spy,
+            unobserve: spy,
+            observe: spy,
         };
         tree.update(<Sentinel {...defaultProps} />);
         expect(renderSpy).not.toBeCalled();
