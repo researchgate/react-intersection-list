@@ -109,7 +109,7 @@ hold the same reference anymore, the list re-renders and we accidentally restart
 </details>
 <br />
 <details>
-  <summary>What's the `threshold` value, and why does it need a _unit_?</summary>
+  <summary>What's the `threshold` value, and why does it need a *unit*?</summary>
   The `threshold` value is the amount of space needed before the `sentinel` intersects with the root. The prop is
 transformed into a valid `rootMargin` property for the `IntersectionObserver`, depending on the `axis` you select. As a
 sidenote, we believe that a percentage unit works best for responsive layouts.
@@ -141,7 +141,7 @@ mode using occlusion culling. It will be implemented in a future release. If you
 | --------------------- | ------------------------------------------------------------------ | ---------------------------------------------- | ------------------------------------------------------------------------------------------------------- |
 | `renderItem/children` | `(index: number, key: number) => React.Element`                    | `(index, key) => <div key={key}>{index}</div>` | render function as children or render props;<br />gets call once for each item.                         |
 | `itemsRenderer`       | `(items: Array(React.Element), ref: HTMLElement) => React.Element` | `(items, ref) => <div ref={ref}>{items}</div>` | render function for the list's<br />root element, often returning a scrollable element.                 |
-| `itemCount/items`     | `number | Array (or Iterable Object)`                              | `0`                                            | item count to render.                                                                                   |
+| `itemCount/items`     | `number/Array (or Iterable Object)`                                | `0`                                            | item count to render.                                                                                   |
 | `awaitMore`           | `boolean`                                                          |                                                | if true keeps the sentinel from detaching.                                                              |
 | `onIntersection`      | `(size: number, pageSize: number) => void`                         |                                                | invoked when the sentinel comes into view.                                                              |
 | `threshold`           | `string`                                                           | `100px`                                        | value in absolute `px` or `%`<br />as spacing before the sentinel hits the edge of the list's viewport. |
