@@ -13,7 +13,7 @@
     "warning": "^4.0.1"
   },
   "devDependencies": {
-    "@researchgate/babel-preset-rg": "^1.0.1",
+    "@researchgate/babel-preset-rg": "^2.0.0",
     "@researchgate/eslint-config-rg-react": "^4.0.0",
     "@storybook/addon-options": "^3.2.16",
     "@storybook/react": "^3.2.16",
