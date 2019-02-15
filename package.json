@@ -39,7 +39,7 @@
     "react-dom": "^16.4.0",
     "react-test-renderer": "^16.4.0",
     "rimraf": "^2.6.1",
-    "standard-version": "^4.2.0",
+    "standard-version": "^5.0.0",
     "style-loader": "^0.22.0",
     "typescript": "^2.6.2",
     "validate-commit-msg": "^2.14.0",
