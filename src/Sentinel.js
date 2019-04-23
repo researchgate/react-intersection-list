@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import Observer from '@researchgate/react-intersection-observer';
 import PropTypes from 'prop-types';
-import { polyfill } from 'react-lifecycles-compat';
 import { computeRootMargin } from './utils';
 
 class Sentinel extends Component {
@@ -73,8 +72,5 @@ class Sentinel extends Component {
         );
     }
 }
-
-// Polyfill your component so the new lifecycles will work with older versions of React:
-polyfill(Sentinel);
 
 export default Sentinel;

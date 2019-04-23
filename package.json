@@ -7,9 +7,8 @@
     "url": "https://github.com/researchgate/react-intersection-list/issues"
   },
   "dependencies": {
-    "@researchgate/react-intersection-observer": "^0.7.3",
-    "prop-types": "^15.6.1",
-    "react-lifecycles-compat": "^3.0.4",
+    "@researchgate/react-intersection-observer": "^1.0.0",
+    "prop-types": "^15.7.2",
     "warning": "^4.0.1"
   },
   "devDependencies": {
@@ -17,6 +16,7 @@
     "@researchgate/eslint-config-rg-react": "^5.0.0",
     "@storybook/addon-options": "^3.2.16",
     "@storybook/react": "^3.2.16",
+    "@types/react": "^16.8.14",
     "babel-cli": "^6.24.1",
     "babel-core": "^6.26.0",
     "babel-eslint": "^9.0.0",
@@ -29,7 +29,7 @@
     "eslint-plugin-import": "^2.8.0",
     "eslint-plugin-prettier": "^3.0.0",
     "eslint-plugin-react": "^7.5.1",
-    "husky": "^0.14.3",
+    "husky": "^1.3.1",
     "intersection-observer": "^0.5.0",
     "jest": "^22.0.0",
     "lint-staged": "^7.0.0",
@@ -40,8 +40,8 @@
     "react-test-renderer": "^16.4.0",
     "rimraf": "^2.6.1",
     "standard-version": "^4.2.0",
-    "style-loader": "^0.22.0",
-    "typescript": "^2.6.2",
+    "style-loader": "^0.19.0",
+    "typescript": "^3.4.4",
     "validate-commit-msg": "^2.14.0",
     "whatwg-fetch": "^2.0.3"
   },
@@ -71,8 +71,8 @@
   "main": "lib/js/index.js",
   "module": "lib/es/index.js",
   "peerDependencies": {
-    "react": ">=15",
-    "react-dom": ">=15"
+    "react": "^16.3.2",
+    "react-dom": "^16.3.2"
   },
   "repository": {
     "type": "git",
@@ -83,9 +83,7 @@
     "testMatch": [
       "**/__tests__/**/*.spec.js"
     ],
-    "setupFiles": [
-      "raf/polyfill"
-    ]
+    "testURL": "http://localhost/"
   },
   "scripts": {
     "build": "npm run build:js && npm run build:es",

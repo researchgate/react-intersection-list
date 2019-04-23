@@ -1,6 +1,5 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { polyfill } from 'react-lifecycles-compat';
 import warning from 'warning';
 import Sentinel from './Sentinel';
 import { getItemCount, computeSize } from './utils';
@@ -162,8 +161,5 @@ class List extends PureComponent {
         return this.renderItems();
     }
 }
-
-// Polyfill your component so the new lifecycles will work with older versions of React:
-polyfill(List);
 
 export default List;
