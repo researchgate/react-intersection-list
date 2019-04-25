@@ -2,10 +2,9 @@
 import 'intersection-observer';
 import React from 'react';
 import renderer from 'react-test-renderer';
+import Observer from '@researchgate/react-intersection-observer';
 import Sentinel from '../Sentinel';
 import { computeRootMargin } from '../utils';
-
-jest.mock('@researchgate/react-intersection-observer');
 
 const defaultProps = {
     axis: 'y',
@@ -49,32 +48,41 @@ describe('constructor', () => {
 
 describe('render', () => {
     test('first time sets a disabled observer', () => {
-        const spy = require('@researchgate/react-intersection-observer').default;
-        createTree();
-        expect(spy.mock.calls[spy.mock.calls.length - 1][0]).toHaveProperty('disabled', true);
-        expect(spy.mock.calls[spy.mock.calls.length - 1][0]).toHaveProperty('root', undefined);
+        const testRenderer = createTree().root;
+        const { props } = testRenderer.findByType(Observer);
+
+        expect(props).toHaveProperty('disabled', true);
+        expect(props).toHaveProperty('root', undefined);
     });
 
     test('re-renders when setRef callback is called', () => {
         const instance = createTree().getInstance();
-        const renderSpy = jest.spyOn(instance, 'render');
+        const spy = (instance.setState = jest.fn());
         const setRefMock = instance.props.setRef.mock;
         const setRefCallback = setRefMock.calls[setRefMock.calls.length - 1][0];
         setRefCallback(null);
-        expect(renderSpy).toHaveBeenCalledTimes(1);
+        expect(spy).toHaveBeenCalledTimes(1);
     });
 
-    test('avoids re-render if new props are the same', () => {
+    test('prevents re-render if root and rootMargin stay the same', () => {
         const tree = createTree();
-        const renderSpy = jest.spyOn(tree.getInstance(), 'render');
-        const spy = jest.fn();
-        tree.getInstance().element = {
-            unobserve: spy,
-            observe: spy,
-        };
+        const spy = jest.spyOn(tree.getInstance(), 'render');
+
         tree.update(<Sentinel {...defaultProps} />);
-        expect(renderSpy).not.toBeCalled();
-        expect(spy).toBeCalled();
+        expect(spy).not.toBeCalled();
+    });
+
+    test('does re-observer if root and rootMargin stay the same', () => {
+        const tree = createTree();
+        const instance = tree.getInstance();
+
+        const spy1 = jest.spyOn(instance.observer, 'externalUnobserve');
+        const spy2 = jest.spyOn(instance.observer, 'observe');
+
+        tree.update(<Sentinel {...defaultProps} />);
+
+        expect(spy1).toHaveBeenCalledTimes(1);
+        expect(spy2).toHaveBeenCalledTimes(1);
     });
 });
 
