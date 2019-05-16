@@ -19,7 +19,7 @@ class Sentinel extends Component {
             rootMargin: computeRootMargin(props),
         };
 
-        this.target = <span style={{ height: 1, width: 1, display: 'block' }} />;
+        this.target = <template style={{ height: 1, minWidth: 1, display: 'block' }} />;
 
         props.setRef(this.setRootElement);
     }
