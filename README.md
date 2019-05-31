@@ -12,14 +12,33 @@
 
 <br>
 
-> **Agent Smith:** ...we have no choice but to continue as planned. Deploy the sentinels. Immediately.
-
-<!-- ### An Infinite Scroller List Component -->
+> **Agent Smith:** ...we have no choice but to continue as planned. Deploy the
+> sentinels. Immediately.
 
 **React Intersection List** builds on top of
-**[React Intersection Observer](https://github.com/researchgate/react-intersection-observer)**, using a
-[sentinel](https://en.wikipedia.org/wiki/Sentinel_value) in the DOM to deliver a high-performance and smooth scrolling
-experience, even on low-end devices.
+**[React Intersection Observer](https://github.com/researchgate/react-intersection-observer)**,
+using a [sentinel](https://en.wikipedia.org/wiki/Sentinel_value) in the DOM to
+deliver a high-performance and smooth scrolling experience, even on low-end
+devices.
+
+<br>
+
+<details>
+<summary><strong>Table of Contents</strong></summary>
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
+- [Getting Started](#getting-started)
+- [Why React Intersection List?](#why-react-intersection-list)
+- [Documentation](#documentation)
+  - [How to](#how-to)
+  - [FAQ](#faq)
+  - [Props](#props)
+  - [Examples](#examples)
+- [Contributing](#contributing)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+</details>
 
 ## Getting Started
 
@@ -27,42 +46,51 @@ experience, even on low-end devices.
 $ npm install --save @researchgate/react-intersection-list
 ```
 
-And optionally the [polyfill](https://github.com/w3c/IntersectionObserver/tree/gh-pages/polyfill):
+And optionally the
+[polyfill](https://github.com/w3c/IntersectionObserver/tree/gh-pages/polyfill):
 
 ```
 $ npm install --save intersection-observer
 ```
 
-Next create a `<List>` and two instance methods as props `children` and `itemRenderer`:
+Next create a `<List>` and two instance methods as props `children` and
+`itemRenderer`:
 
 ```jsx
 import React, { Component } from 'react';
 import List from '@researchgate/react-intersection-list';
 
 export default class InfiniteList extends Component {
-    itemsRenderer = (items, ref) => (
-        <ul className="list" ref={ref}>
-            {items}
-        </ul>
+  itemsRenderer = (items, ref) => (
+    <ul className="list" ref={ref}>
+      {items}
+    </ul>
+  );
+
+  itemRenderer = (index, key) => <li key={key}>{index}</li>;
+
+  render() {
+    return (
+      <List
+        itemCount={1000}
+        itemsRenderer={this.itemsRenderer}
+        renderItem={this.itemRenderer}
+      />
     );
-
-    itemRenderer = (index, key) => <li key={key}>{index}</li>;
-
-    render() {
-        return <List itemCount={1000} itemsRenderer={this.itemsRenderer} renderItem={this.itemRenderer} />;
-    }
+  }
 }
 ```
 
-Note that `<List>` is a `PureComponent` so it can keep itself from re-rendering. It's highly recommended to avoid
-creating new functions for `renderItem` and `itemsRenderer` so that it can successfully shallow compare props on
-re-render.
+Note that `<List>` is a `PureComponent` so it can keep itself from re-rendering.
+It's highly recommended to avoid creating new functions for `renderItem` and
+`itemsRenderer` so that it can successfully shallow compare props on re-render.
 
 ## Why React Intersection List?
 
-The approach to infinite scrolling was commonly done by devs implementing throttled `scroll` event callbacks. This keeps
-the main thread unnecessarily busy... No more! `IntersectionObservers` invoke callbacks in a **low-priority and
-asynchronous** way by design.
+The approach to infinite scrolling was commonly done by devs implementing
+throttled `scroll` event callbacks. This keeps the main thread unnecessarily
+busy... No more! `IntersectionObservers` invoke callbacks in a **low-priority
+and asynchronous** way by design.
 
 > **Agent Smith:** Never send a human to do a machine's job.
 
@@ -78,22 +106,27 @@ The implementation follows these steps:
 
 ### How to
 
-Provided an `itemsRenderer` prop you must attach the `ref` argument to your scrollable DOM element:
+Provided an `itemsRenderer` prop you must attach the `ref` argument to your
+scrollable DOM element:
 
 ```jsx
-<div ref={ref}>{items}</div>;
+<div ref={ref}>{items}</div>
 ```
 
-This element specifies `overflow: auto|scroll` and it'll become the `IntersectionObserver root`. If the `overflow`
-property isn't found, then `window` will be used as the `root` instead.
+This element specifies `overflow: auto|scroll` and it'll become the
+`IntersectionObserver root`. If the `overflow` property isn't found, then
+`window` will be used as the `root` instead.
 
-The `sentinel` element is by default detached from the list when the current size reaches the available length, unless
-you're using `awaitMore`. In case your list is in memory and you rely on the list for incremental rendering only, the
-default detaching behavior suffices. If you're loading more items in an asynchoronous way, make sure you switch
-`awaitMore` once you reach the total length (bottom of the list).
+The `sentinel` element is by default detached from the list when the current
+size reaches the available length, unless you're using `awaitMore`. In case your
+list is in memory and you rely on the list for incremental rendering only, the
+default detaching behavior suffices. If you're loading more items in an
+asynchoronous way, make sure you switch `awaitMore` once you reach the total
+length (bottom of the list).
 
-The prop `itemCount` must be used if the prop `items` is not provided, and viceversa. Calculating the list size is done
-by adding the current size and the page size until the items' length is reached.
+The prop `itemCount` must be used if the prop `items` is not provided, and
+viceversa. Calculating the list size is done by adding the current size and the
+page size until the items' length is reached.
 
 ### FAQ
 
@@ -158,11 +191,13 @@ Find multiple examples under:
 
 We'd love your help on creating React Intersection List!
 
-Before you do, please read our [Code of Conduct](.github/CODE_OF_CONDUCT.md) so you know what we expect when you
-contribute to our projects.
+Before you do, please read our [Code of Conduct](.github/CODE_OF_CONDUCT.md) so
+you know what we expect when you contribute to our projects.
 
-Our [Contributing Guide](.github/CONTRIBUTING.md) tells you about our development process and what we're looking for,
-gives you instructions on how to issue bugs and suggest features, and explains how you can build and test your changes.
+Our [Contributing Guide](.github/CONTRIBUTING.md) tells you about our
+development process and what we're looking for, gives you instructions on how to
+issue bugs and suggest features, and explains how you can build and test your
+changes.
 
-**Haven't contributed to an open source project before?** No problem! [Contributing Guide](.github/CONTRIBUTING.md) has
-you covered as well.
+**Haven't contributed to an open source project before?** No problem!
+[Contributing Guide](.github/CONTRIBUTING.md) has you covered as well.

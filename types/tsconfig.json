@@ -1,7 +1,6 @@
 {
   "compilerOptions": {
     "jsx": "react",
-    "noEmit": true,
-    "lib": ["es6"]
+    "noEmit": true
   }
 }

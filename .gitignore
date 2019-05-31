@@ -1,9 +1,6 @@
-node_modules
 npm-debug.log*
 yarn-error.log
-lib
-coverage
-docs/static
-docs/favicon*
-docs/*.html
-.DS_Store
+/node_modules
+/lib
+/src/coverage
+/.docs
