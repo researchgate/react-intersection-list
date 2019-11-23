@@ -1,3 +1,10 @@
+## [3.0.6](https://github.com/researchgate/react-intersection-list/compare/v3.0.5...v3.0.6) (2019-11-23)
+
+
+### Bug Fixes
+
+* **spire:** change tooling and build system to spire ([36bdcd7](https://github.com/researchgate/react-intersection-list/commit/36bdcd7bc9f61d5c3f33e0e73f0afbdba6cc353f))
+
 # Change Log
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
