@@ -1,3 +1,10 @@
+## [3.0.7](https://github.com/researchgate/react-intersection-list/compare/v3.0.6...v3.0.7) (2019-11-23)
+
+
+### Bug Fixes
+
+* **publish:** Do not publish tests ([ef19403](https://github.com/researchgate/react-intersection-list/commit/ef19403259e91b9fd27109d3c56cae5f84679167))
+
 ## [3.0.6](https://github.com/researchgate/react-intersection-list/compare/v3.0.5...v3.0.6) (2019-11-23)
 
 
