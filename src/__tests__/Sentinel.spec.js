@@ -12,7 +12,8 @@ const defaultProps = {
     setRef: jest.fn(),
     onChange() {},
 };
-const createTree = (props = defaultProps) => renderer.create(<Sentinel {...props} />);
+const createTree = (props = defaultProps) =>
+    renderer.create(<Sentinel {...props} />);
 
 describe('constructor', () => {
     const propTypes = Sentinel.propTypes;
@@ -31,7 +32,9 @@ describe('constructor', () => {
         const computeRootMarginSpy = jest.fn();
         utils.computeRootMargin = computeRootMarginSpy;
         const TestSentinel = require('../Sentinel').default;
-        const renderMock = jest.spyOn(TestSentinel.prototype, 'render').mockImplementation(() => {});
+        const renderMock = jest
+            .spyOn(TestSentinel.prototype, 'render')
+            .mockImplementation(() => {});
         const setRefMock = jest.fn();
         const props = { setRef: setRefMock };
         const tree = renderer.create(<TestSentinel {...props} />);
@@ -88,8 +91,12 @@ describe('render', () => {
 
 describe('compute', () => {
     test('returns computed rootMargin', () => {
-        expect(computeRootMargin({ threshold: '50%', axis: 'x' })).toBe('0% 50%');
-        expect(computeRootMargin({ threshold: '50px', axis: 'y' })).toBe('50px 0px');
+        expect(computeRootMargin({ threshold: '50%', axis: 'x' })).toBe(
+            '0% 50%'
+        );
+        expect(computeRootMargin({ threshold: '50px', axis: 'y' })).toBe(
+            '50px 0px'
+        );
         expect(computeRootMargin({ threshold: '50', axis: 'y' })).toBe('50 0');
     });
 

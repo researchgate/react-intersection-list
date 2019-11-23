@@ -6,7 +6,7 @@ import List from '../';
 import { getItemCount } from '../utils';
 import mockSentinel, { mockCallback } from './mockSentinel';
 
-jest.mock('../Sentinel', () => props => {
+jest.mock('../Sentinel', () => (props) => {
     if (props.setRef) {
         props.setRef(mockCallback);
     }
@@ -14,7 +14,8 @@ jest.mock('../Sentinel', () => props => {
 });
 
 const target = { nodeType: 1 };
-const createTree = (props = {}) => renderer.create(<List {...props} />, { createNodeMock: () => target });
+const createTree = (props = {}) =>
+    renderer.create(<List {...props} />, { createNodeMock: () => target });
 
 beforeEach(() => {
     jest.clearAllMocks();

@@ -41,7 +41,7 @@ export default class AsyncList extends Component {
         let hasError = false;
 
         fetch(url + qs, { headers })
-            .then(response => {
+            .then((response) => {
                 if (!(response.status !== 200)) {
                     const etag = response.headers.get('etag');
                     if (etag) {
@@ -52,13 +52,15 @@ export default class AsyncList extends Component {
                 }
                 return response.json();
             })
-            .then(repos => {
+            .then((repos) => {
                 if (hasError) {
                     throw new Error(repos.message);
                 }
-                this.feedList(repos.filter(repo => repo.fork === false && repo.language));
+                this.feedList(
+                    repos.filter((repo) => repo.fork === false && repo.language)
+                );
             })
-            .catch(err => {
+            .catch((err) => {
                 console.error(err); // eslint-disable-line
                 this.feedList([]);
             });

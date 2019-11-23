@@ -14,9 +14,15 @@ class List extends PureComponent {
         initialIndex: PropTypes.number,
         items(props, propName) {
             const object = props[propName];
-            if (object != null && !(Array.isArray(object) || typeof object[Symbol.iterator] === 'function')) {
+            if (
+                object != null &&
+                !(
+                    Array.isArray(object) ||
+                    typeof object[Symbol.iterator] === 'function'
+                )
+            ) {
                 return new Error(
-                    `\`${propName}\` must be of type Array or a native type implementing the iterable interface`,
+                    `\`${propName}\` must be of type Array or a native type implementing the iterable interface`
                 );
             }
             return undefined;
@@ -66,13 +72,19 @@ class List extends PureComponent {
         this.prematureIntersectionChecked = this.state.size === 0;
     }
 
-    setRef = callback => {
+    setRef = (callback) => {
         let prevRootNode;
-        this.setRootNode = node => {
+        this.setRootNode = (node) => {
             if (node !== prevRootNode) {
                 prevRootNode = node;
-                const overflow = window.getComputedStyle(node)[AXIS_CSS_MAP[this.props.axis]];
-                callback(['auto', 'scroll', 'overlay'].indexOf(overflow) !== -1 ? node : null);
+                const overflow = window.getComputedStyle(node)[
+                    AXIS_CSS_MAP[this.props.axis]
+                ];
+                callback(
+                    ['auto', 'scroll', 'overlay'].indexOf(overflow) !== -1
+                        ? node
+                        : null
+                );
             }
         };
     };
@@ -87,7 +99,7 @@ class List extends PureComponent {
                 !isIntersecting,
                 'ReactIntersectionList: the sentinel detected a viewport with a bigger size than the size of its items. ' +
                     'This could lead to detrimental behavior, e.g.: triggering more than one onIntersection callback at the start.\n' +
-                    'To prevent this, use either a bigger `pageSize` value or avoid using the prop awaitMore initially.',
+                    'To prevent this, use either a bigger `pageSize` value or avoid using the prop awaitMore initially.'
             );
         }
 
@@ -112,18 +124,26 @@ class List extends PureComponent {
 
         warning(
             !(hasChildren && hasRender),
-            'ReactIntersectionList: cannot use children and renderItem props as render function at the same time.',
+            'ReactIntersectionList: cannot use children and renderItem props as render function at the same time.'
         );
 
         if (hasChildren) {
             return children;
         }
 
-        return hasRender ? renderItem : (index, key) => <div key={key}>{index}</div>;
+        return hasRender
+            ? renderItem
+            : (index, key) => <div key={key}>{index}</div>;
     }
 
     renderItems() {
-        const { awaitMore, axis, initialIndex, itemsRenderer, threshold } = this.props;
+        const {
+            awaitMore,
+            axis,
+            initialIndex,
+            itemsRenderer,
+            threshold,
+        } = this.props;
         const { size, itemCount } = this.state;
         const itemRenderer = this.getItemRenderer();
         const items = [];
@@ -150,7 +170,7 @@ class List extends PureComponent {
             }
         }
 
-        return itemsRenderer(items, node => {
+        return itemsRenderer(items, (node) => {
             if (node && sentinel) {
                 this.setRootNode(node);
             }

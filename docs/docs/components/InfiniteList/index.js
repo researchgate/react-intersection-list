@@ -8,6 +8,8 @@ const itemsRenderer = (items, ref) => (
 );
 
 // eslint-disable-next-line react/no-multi-comp
-const InfiniteList = () => <List itemCount={Infinity} itemsRenderer={itemsRenderer} pageSize={40} />;
+const InfiniteList = () => (
+    <List itemCount={Infinity} itemsRenderer={itemsRenderer} pageSize={40} />
+);
 
 export default InfiniteList;

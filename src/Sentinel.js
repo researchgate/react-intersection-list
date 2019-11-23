@@ -19,7 +19,9 @@ class Sentinel extends Component {
             rootMargin: computeRootMargin(props),
         };
 
-        this.target = <template style={{ height: 1, minWidth: 1, display: 'block' }} />;
+        this.target = (
+            <template style={{ height: 1, minWidth: 1, display: 'block' }} />
+        );
 
         props.setRef(this.setRootElement);
     }
@@ -37,11 +39,17 @@ class Sentinel extends Component {
     }
 
     shouldComponentUpdate(nextProps, { rootMargin, rootElement }) {
-        const { rootMargin: currentRootMargin, rootElement: currentRootElement } = this.state;
+        const {
+            rootMargin: currentRootMargin,
+            rootElement: currentRootElement,
+        } = this.state;
         // When the rootMargin stays the same but the sentinel is repositioned, it can fall within
         // its threshold prematurely. In this case we don't get any update from the Observer instance.
         // We need to guarantee an update, and re-observing is a cheap way to accomplish this.
-        if (currentRootMargin === rootMargin && currentRootElement === rootElement) {
+        if (
+            currentRootMargin === rootMargin &&
+            currentRootElement === rootElement
+        ) {
             this.observer.externalUnobserve();
             this.observer.observe();
             return false;
@@ -49,7 +57,7 @@ class Sentinel extends Component {
         return true;
     }
 
-    setRootElement = rootElement => {
+    setRootElement = (rootElement) => {
         this.setState({ rootElement });
     };
 
@@ -59,7 +67,7 @@ class Sentinel extends Component {
 
         return (
             <Observer
-                ref={instance => {
+                ref={(instance) => {
                     this.observer = instance;
                 }}
                 disabled={typeof rootElement === 'undefined'}

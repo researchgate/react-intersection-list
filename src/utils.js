@@ -20,7 +20,7 @@ export function getItemCount({ itemCount, items }, warnIfConflict) {
     if (warnIfConflict) {
         warning(
             !(hasItemCount && hasItems),
-            'ReactIntersectionList: cannot use itemCount and items props at the same time, choose one to determine the number of items to render.',
+            'ReactIntersectionList: cannot use itemCount and items props at the same time, choose one to determine the number of items to render.'
         );
     }
 
