@@ -2139,10 +2139,10 @@
     invariant "^2.2.4"
     prop-types "^15.7.2"
 
-"@researchgate/spire-config@^1.5.4":
-  version "1.5.4"
-  resolved "https://registry.yarnpkg.com/@researchgate/spire-config/-/spire-config-1.5.4.tgz#acf706cd61802f5939aee539f12a8933a3b26b59"
-  integrity sha512-xhcaU0rznW75gSQxOObVDJjxPCY4xyYByFxPoixh04Af6mSgYUf6tEiigzd3INzIfoLAJvvft18Kh+buIaBT1g==
+"@researchgate/spire-config@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@researchgate/spire-config/-/spire-config-2.0.0.tgz#eeda9693bb42cb5e4bd83ae7f937b28ecc4731f4"
+  integrity sha512-ONO2H6UgLvicx/nA7jFSkLut0TupQPyz/BxlnwH/4fz44hD9XF6IgjWd7F/T1xQNr04jcDnXhSvRw7OU3O1YeA==
   dependencies:
     "@researchgate/eslint-config-node" "^1.5.1"
     "@researchgate/eslint-config-node-babel" "^1.4.3"
