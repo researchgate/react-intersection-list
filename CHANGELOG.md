@@ -1,3 +1,10 @@
+## [3.0.8](https://github.com/researchgate/react-intersection-list/compare/v3.0.7...v3.0.8) (2019-12-01)
+
+
+### Bug Fixes
+
+* **deps:** lock file maintenance ([#79](https://github.com/researchgate/react-intersection-list/issues/79)) ([fd19604](https://github.com/researchgate/react-intersection-list/commit/fd1960478c2dadb8518c45fc113216168325061a))
+
 ## [3.0.7](https://github.com/researchgate/react-intersection-list/compare/v3.0.6...v3.0.7) (2019-11-23)
 
 
