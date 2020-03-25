@@ -1,10 +1,12 @@
-import * as storybook from '@storybook/react';
-import { setOptions } from '@storybook/addon-options';
+import { addParameters, configure } from '@storybook/react';
+import { withOptions } from '@storybook/addon-options';
 
-setOptions({
-  name: 'React Intersection List',
-  url: 'https://github.com/researchgate/react-intersection-list',
-  showDownPanel: false,
+withOptions({
+    name: 'React Intersection List',
+    url: 'https://github.com/researchgate/react-intersection-list',
+    showDownPanel: false,
 });
 
-storybook.configure(() => require('../docs/docs/index.js'), module);
+addParameters({ options: { theme: {} } });
+
+configure(() => require('../docs/docs/index.js'), module);

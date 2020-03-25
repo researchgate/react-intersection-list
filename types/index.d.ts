@@ -5,41 +5,44 @@ export default class ListClass extends React.PureComponent<ListProps> {}
 type RenderFunction = (index: number, key: number) => JSX.Element | string;
 
 type IterableType =
-    | {
-          length: number;
-      }
-    | {
-          size: number;
-      };
+  | {
+      length: number;
+    }
+  | {
+      size: number;
+    };
 
 interface ChildrenAsFunction {
-    children: RenderFunction;
-    renderItem?: never;
+  children: RenderFunction;
+  renderItem?: never;
 }
 
 interface RenderAsProp {
-    renderItem: RenderFunction;
-    children?: never;
+  renderItem: RenderFunction;
+  children?: never;
 }
 
 interface ItemCountScalar {
-    itemCount: number;
-    items?: never;
+  itemCount: number;
+  items?: never;
 }
 
 interface ItemCountIterable {
-    items: IterableType;
-    itemCount?: never;
+  items: IterableType;
+  itemCount?: never;
 }
 
 interface OptionalProps {
-    awaitMore?: boolean;
-    axis?: 'x' | 'y';
-    initialIndex?: number;
-    itemsRenderer?: (items: IterableType, ref: (instance: React.ReactInstance) => void) => JSX.Element;
-    onIntersection?: (nextSize: number, pageSize: number) => undefined;
-    pageSize?: number;
-    threshold?: string;
+  awaitMore?: boolean;
+  axis?: 'x' | 'y';
+  initialIndex?: number;
+  itemsRenderer?: (
+    items: IterableType,
+    ref: (instance: React.ReactInstance) => void
+  ) => JSX.Element;
+  onIntersection?: (nextSize: number, pageSize: number) => void;
+  pageSize?: number;
+  threshold?: string;
 }
 
 type RenderPropType = ChildrenAsFunction | RenderAsProp;

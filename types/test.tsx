@@ -6,13 +6,14 @@ import List from '..';
 <List itemCount={Infinity} renderItem={() => <b>bold</b>} />;
 
 <List
-    itemCount={100}
-    awaitMore={false}
-    axis="y"
-    initialIndex={50}
-    pageSize={25}
-    threshold="50%"
-    itemsRenderer={(items, ref) => <div ref={ref}>{items}</div>}
+  itemCount={100}
+  awaitMore={false}
+  axis="y"
+  initialIndex={50}
+  pageSize={25}
+  threshold="50%"
+  itemsRenderer={(items, ref) => <div ref={ref}>{items}</div>}
+  onIntersection={() => {}}
 >
-    {(index, key) => `${index}${key}`}
+  {(index, key) => `${index}${key}`}
 </List>;
