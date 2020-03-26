@@ -1,3 +1,10 @@
+## [3.0.9](https://github.com/researchgate/react-intersection-list/compare/v3.0.8...v3.0.9) (2020-03-26)
+
+
+### Bug Fixes
+
+* **intersection-observer:** upgrade to latest version and adapt ([1a5fa7c](https://github.com/researchgate/react-intersection-list/commit/1a5fa7c60e1aaab3a4056b4bd1e5049fbb3c7294))
+
 ## [3.0.8](https://github.com/researchgate/react-intersection-list/compare/v3.0.7...v3.0.8) (2019-12-01)
 
 
