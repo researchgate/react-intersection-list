@@ -2,7 +2,7 @@
 import 'intersection-observer';
 import React from 'react';
 import renderer from 'react-test-renderer';
-import Observer from '@researchgate/react-intersection-observer';
+import { IntersectionObserver as Observer } from '@researchgate/react-intersection-observer/lib/js/IntersectionObserver';
 import Sentinel from '../Sentinel';
 import { computeRootMargin } from '../utils';
 

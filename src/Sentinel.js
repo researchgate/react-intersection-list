@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Observer from '@researchgate/react-intersection-observer';
+import { IntersectionObserver as Observer } from '@researchgate/react-intersection-observer/lib/js/IntersectionObserver';
 import PropTypes from 'prop-types';
 import { computeRootMargin } from './utils';
 
