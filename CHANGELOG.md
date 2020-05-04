@@ -1,3 +1,10 @@
+## [3.0.10](https://github.com/researchgate/react-intersection-list/compare/v3.0.9...v3.0.10) (2020-05-04)
+
+
+### Bug Fixes
+
+* fix import path of intersection-observer dependency in sentinel ([#124](https://github.com/researchgate/react-intersection-list/issues/124)) ([659afa8](https://github.com/researchgate/react-intersection-list/commit/659afa8835ede0b07bd49d3d23f8e652312c1dff))
+
 ## [3.0.9](https://github.com/researchgate/react-intersection-list/compare/v3.0.8...v3.0.9) (2020-03-26)
 
 

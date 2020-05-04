@@ -1,7 +1,7 @@
 {
   "name": "@researchgate/react-intersection-list",
   "description": "React List Component using the Intersection Observer API",
-  "version": "3.0.9",
+  "version": "3.0.10",
   "author": "Luis Merino <mail@luismerino.name>",
   "engines": {
     "node": ">=10.0.0"
