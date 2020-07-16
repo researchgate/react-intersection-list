@@ -30,7 +30,7 @@
     "react-test-renderer": "16.13.1",
     "spire": "1.8.3",
     "spire-plugin-semantic-release": "1.8.2",
-    "typescript": "3.9.6",
+    "typescript": "3.9.7",
     "whatwg-fetch": "3.2.0"
   },
   "files": [
