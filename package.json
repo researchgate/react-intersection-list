@@ -69,7 +69,14 @@
   },
   "prettier": "@researchgate/prettier-config",
   "spire": {
-    "extends": "@researchgate/spire-config",
+    "extends": [
+      [
+        "@researchgate/spire-config",
+        {
+          "eslint": "react-typescript"
+        }
+      ]
+    ],
     "plugins": [
       "spire-plugin-semantic-release",
       "<rootDir>/.spire/spire-plugin-tslint"
