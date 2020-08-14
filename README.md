@@ -1,3 +1,5 @@
+⚠️ This repository is not as actively maintained as we wish it to be. Feel free to fork this project and fix any outstanding issues you might have, and we'll try to merge relevant changes eventually. We apologize for the inconvenience.
+
 <p align="center">
   <img alt="React Intersection List" src=".github/logo.svg" width="888">
 </p>
