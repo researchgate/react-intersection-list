@@ -1,3 +1,10 @@
+## [3.0.11](https://github.com/researchgate/react-intersection-list/compare/v3.0.10...v3.0.11) (2020-08-14)
+
+
+### Bug Fixes
+
+* **security:** Fix security issue with serialize-javascript ([8c3265e](https://github.com/researchgate/react-intersection-list/commit/8c3265e10a4de29a7717edc53f6be7158f41b77d))
+
 ## [3.0.10](https://github.com/researchgate/react-intersection-list/compare/v3.0.9...v3.0.10) (2020-05-04)
 
 
