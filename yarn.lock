@@ -3212,7 +3212,7 @@ babel-code-frame@^6.22.0:
     esutils "^2.0.2"
     js-tokens "^3.0.2"
 
-babel-eslint@^10.0.2, babel-eslint@^10.0.3:
+babel-eslint@^10.0.3:
   version "10.1.0"
   resolved "https://registry.yarnpkg.com/babel-eslint/-/babel-eslint-10.1.0.tgz#6968e568a910b78fb3779cdd8b6ac2f479943232"
   integrity sha512-ifWaTHQ0ce+448CYop8AdrQiBsGrnC+bMgfyKFdi6EsPLTAWG+QfyDeM6OH+FmWnKvEq5NnBMLvlBUPKQZoDSg==
@@ -5921,10 +5921,10 @@ eslint-visitor-keys@^1.0.0, eslint-visitor-keys@^1.1.0, eslint-visitor-keys@^1.3
   resolved "https://registry.yarnpkg.com/eslint-visitor-keys/-/eslint-visitor-keys-1.3.0.tgz#30ebd1ef7c2fdff01c3a4f151044af25fab0523e"
   integrity sha512-6J72N8UNa462wa/KFODt/PJ3IU60SDpC3QXC1Hjc1BXXpfL2C9R5+AU7jhe0F6GREqVMh4Juu+NY7xn+6dipUQ==
 
-eslint@^7.0.0:
-  version "7.6.0"
-  resolved "https://registry.yarnpkg.com/eslint/-/eslint-7.6.0.tgz#522d67cfaea09724d96949c70e7a0550614d64d6"
-  integrity sha512-QlAManNtqr7sozWm5TF4wIH9gmUm2hE3vNRUvyoYAa4y1l5/jxD/PQStEjBMQtCqZmSep8UxrcecI60hOpe61w==
+eslint@^7.0.0, eslint@^7.5.0:
+  version "7.7.0"
+  resolved "https://registry.yarnpkg.com/eslint/-/eslint-7.7.0.tgz#18beba51411927c4b64da0a8ceadefe4030d6073"
+  integrity sha512-1KUxLzos0ZVsyL81PnRN335nDtQ8/vZUD6uMtWbF+5zDtjKcsklIi78XoE0MVL93QvWTu+E5y44VyyCsOMBrIg==
   dependencies:
     "@babel/code-frame" "^7.0.0"
     ajv "^6.10.0"
@@ -13010,14 +13010,14 @@ spdx-license-ids@^3.0.0:
   resolved "https://registry.yarnpkg.com/spdx-license-ids/-/spdx-license-ids-3.0.5.tgz#3694b5804567a458d3c8045842a6358632f62654"
   integrity sha512-J+FWzZoynJEXGphVIS+XEh3kFSjZX/1i9gFBaWQcB+/tmpe2qUsSBABpcxqxnAxFdiUFEgAX1bjYGQvIZmoz9Q==
 
-spire-config-default@^3.0.2:
-  version "3.0.2"
-  resolved "https://registry.yarnpkg.com/spire-config-default/-/spire-config-default-3.0.2.tgz#8c3f42c662fb3777b20497addf2e4bec7165e5c6"
-  integrity sha512-ZE6zH7KQg3BdambuG0uaWHqlKHCtxKxg2+UhLzOb76phgAMYKzIDfN1pZ3YPLmGzQtS7PE9K63uVHqI/dBuRdA==
+spire-config-default@^3.1.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/spire-config-default/-/spire-config-default-3.1.0.tgz#fbbae8ee88f59d6ff1b85aba21d005feee9a0640"
+  integrity sha512-8ymHheJZSLpEIOrLHOnImGisWBgD3zE/dzvJcfYcMNVbDC0PAiUujxornG2wya51iZIHCJvzleFMBbuSN2VqQQ==
   dependencies:
     spire-plugin-clean "^3.0.2"
     spire-plugin-doctoc "^3.0.2"
-    spire-plugin-eslint "^3.0.2"
+    spire-plugin-eslint "^3.1.0"
     spire-plugin-jest "^3.0.2"
     spire-plugin-lint-staged "^3.0.2"
     spire-plugin-prettier "^3.0.2"
@@ -13036,13 +13036,12 @@ spire-plugin-doctoc@^3.0.2:
   dependencies:
     doctoc "^1.4.0"
 
-spire-plugin-eslint@^3.0.2:
-  version "3.0.2"
-  resolved "https://registry.yarnpkg.com/spire-plugin-eslint/-/spire-plugin-eslint-3.0.2.tgz#6b81732f212b1b606a8777335cb6acd05f84dc75"
-  integrity sha512-FWVced4dxlAGtSPqS4/ierHX4CWF1eXctptsFa+EwecFHF9cobThPxmkV/e8a8yass9eoCHHAWq9pUnCfJjPjQ==
+spire-plugin-eslint@^3.1.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/spire-plugin-eslint/-/spire-plugin-eslint-3.1.0.tgz#ff87f4523eb3adde0133c6272e569e0abd584593"
+  integrity sha512-Bdm1JCyYBToBjzx1f7kaBseQeF3HnRL0DjA7Jr7GmfLov3Cmg4PdU5azA4gAmnqF8D+OsG4xgYlcYr7QVSOJtw==
   dependencies:
-    babel-eslint "^10.0.2"
-    eslint "^7.0.0"
+    eslint "^7.5.0"
     eslint-config-prettier "^6.0.0"
     eslint-plugin-prettier "^3.1.0"
     execa "^4.0.0"
@@ -13093,10 +13092,10 @@ spire-plugin-yarn@^3.0.0:
     use-yarn "^2.2.0"
     yarn-deduplicate "^2.0.0"
 
-spire@3.0.2:
-  version "3.0.2"
-  resolved "https://registry.yarnpkg.com/spire/-/spire-3.0.2.tgz#92cce2fd4a9451763d46401f63dd78760fb32785"
-  integrity sha512-oBGDtYanNaDfcYyaabrI+lYe9mbWuphLmjtUOgct3wTCOx7JkaFMZ2+XscPZ421vMyP6g0ZwWbvAdlxjmzlhUw==
+spire@3.1.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/spire/-/spire-3.1.0.tgz#4fd45f3cee651c88baf030c2abea33accc8795cb"
+  integrity sha512-ohljEJovo+v5Qy1F4YTdTRuW+WssAwFNPtujhYase0ECOMc3w5Q/gzf+qIKVNvNyebkZNTTZIRQF2saKl8+3Nw==
   dependencies:
     cosmiconfig "^7.0.0"
     detect-indent "^6.0.0"
@@ -13106,7 +13105,7 @@ spire@3.0.2:
     invariant "^2.2.4"
     pretty-format "^26.0.0"
     signale "^1.4.0"
-    spire-config-default "^3.0.2"
+    spire-config-default "^3.1.0"
     yargs "^15.0.0"
 
 split-on-first@^1.0.0:
