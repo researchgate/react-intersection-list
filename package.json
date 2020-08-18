@@ -68,9 +68,6 @@
     "testURL": "http://localhost/"
   },
   "prettier": "@researchgate/prettier-config",
-  "resolutions": {
-    "serialize-javascript": "3.1.0"
-  },
   "spire": {
     "extends": [
       [
