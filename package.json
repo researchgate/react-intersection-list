@@ -15,8 +15,8 @@
     "warning": "^4.0.3"
   },
   "devDependencies": {
-    "@babel/cli": "7.10.5",
-    "@babel/core": "7.11.4",
+    "@babel/cli": "7.11.5",
+    "@babel/core": "7.11.5",
     "@researchgate/babel-preset": "2.0.3",
     "@researchgate/spire-config": "5.0.7",
     "@storybook/addon-options": "5.3.21",
