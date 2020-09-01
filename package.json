@@ -17,7 +17,7 @@
   "devDependencies": {
     "@babel/cli": "7.11.5",
     "@babel/core": "7.11.5",
-    "@researchgate/babel-preset": "2.0.3",
+    "@researchgate/babel-preset": "2.0.4",
     "@researchgate/spire-config": "5.0.7",
     "@storybook/addon-options": "5.3.21",
     "@storybook/react": "5.3.21",
