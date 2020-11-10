@@ -22,7 +22,7 @@
     "@storybook/addon-options": "5.3.21",
     "@storybook/react": "5.3.21",
     "@types/react": "16.9.56",
-    "babel-loader": "8.2.0",
+    "babel-loader": "8.2.1",
     "cross-env": "7.0.2",
     "intersection-observer": "0.11.0",
     "react": "16.14.0",
