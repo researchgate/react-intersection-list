@@ -13019,16 +13019,16 @@ spdx-license-ids@^3.0.0:
   resolved "https://registry.yarnpkg.com/spdx-license-ids/-/spdx-license-ids-3.0.5.tgz#3694b5804567a458d3c8045842a6358632f62654"
   integrity sha512-J+FWzZoynJEXGphVIS+XEh3kFSjZX/1i9gFBaWQcB+/tmpe2qUsSBABpcxqxnAxFdiUFEgAX1bjYGQvIZmoz9Q==
 
-spire-config-default@^3.1.0:
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/spire-config-default/-/spire-config-default-3.1.0.tgz#fbbae8ee88f59d6ff1b85aba21d005feee9a0640"
-  integrity sha512-8ymHheJZSLpEIOrLHOnImGisWBgD3zE/dzvJcfYcMNVbDC0PAiUujxornG2wya51iZIHCJvzleFMBbuSN2VqQQ==
+spire-config-default@^3.2.1:
+  version "3.2.1"
+  resolved "https://registry.yarnpkg.com/spire-config-default/-/spire-config-default-3.2.1.tgz#8c3834dd54bd35093b44938e6eb20c71ea6a1cb7"
+  integrity sha512-0rNrIPuuUKHv8L17EpwUqrbDWOgBxGs6BZrM9oTpIjU82sqWmCu1JLV01MbPhySmSG9Olzj1B6Iw3xTuKBADwg==
   dependencies:
     spire-plugin-clean "^3.0.2"
     spire-plugin-doctoc "^3.0.2"
     spire-plugin-eslint "^3.1.0"
     spire-plugin-jest "^3.0.2"
-    spire-plugin-lint-staged "^3.0.2"
+    spire-plugin-lint-staged "^3.2.1"
     spire-plugin-prettier "^3.0.2"
 
 spire-plugin-clean@^3.0.2:
@@ -13063,10 +13063,10 @@ spire-plugin-jest@^3.0.2:
     execa "^4.0.0"
     jest "^26.0.0"
 
-spire-plugin-lint-staged@^3.0.2:
-  version "3.0.2"
-  resolved "https://registry.yarnpkg.com/spire-plugin-lint-staged/-/spire-plugin-lint-staged-3.0.2.tgz#0c329ec51240d9bc30dd9c125cf71a11d533a274"
-  integrity sha512-JGoPdgLGfaeCx7QoKfFe2d5Vo0EZoCCUrZmp1iIy5jqO8Xni/o6A++Q3RUH33tQKiu+Y5CWH7rylco1GamuYyw==
+spire-plugin-lint-staged@^3.2.1:
+  version "3.2.1"
+  resolved "https://registry.yarnpkg.com/spire-plugin-lint-staged/-/spire-plugin-lint-staged-3.2.1.tgz#017a0d39818c0f466ff1b40ece3a2a6d0566a0b6"
+  integrity sha512-9eOXY/VT7KLO1T+w8uZGJUxzNEHn1K/XSwMNhnHjsZsziyLS0bwtYr+eSCa7X1IMbGuKL9JVgE9mRooBP2r5CQ==
   dependencies:
     lint-staged "^10.0.0"
 
@@ -13101,10 +13101,10 @@ spire-plugin-yarn@^3.0.0:
     use-yarn "^2.2.0"
     yarn-deduplicate "^2.0.0"
 
-spire@3.1.2:
-  version "3.1.2"
-  resolved "https://registry.yarnpkg.com/spire/-/spire-3.1.2.tgz#93e6489ee52a6d7a1706cb355f06b24bcf80933c"
-  integrity sha512-XiR2R6vNL+WzxhqLd3B0Au6GHIb0MlZX4FZsTvUAkdW3dhuXR/f4Z/eK3KmKnOnwVFBNEwqPuY12yhAiPliNNA==
+spire@3.2.1:
+  version "3.2.1"
+  resolved "https://registry.yarnpkg.com/spire/-/spire-3.2.1.tgz#d6e53ef1c7e957c67b9dd517479e6b1b2bcc309c"
+  integrity sha512-j2R9l75jt3OlCWWTMkkWkmBnKFEYGQe5sqSM2TtV+UihjiCe9yxttvA4Yf+7JKYEGoBFr5KcrGlUtTgdHp2Kkw==
   dependencies:
     cosmiconfig "^7.0.0"
     detect-indent "^6.0.0"
@@ -13114,7 +13114,7 @@ spire@3.1.2:
     invariant "^2.2.4"
     pretty-format "^26.0.0"
     signale "^1.4.0"
-    spire-config-default "^3.1.0"
+    spire-config-default "^3.2.1"
     yargs "^16.0.0"
 
 split-on-first@^1.0.0:
