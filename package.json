@@ -20,7 +20,7 @@
     "@researchgate/babel-preset": "2.0.6",
     "@researchgate/spire-config": "5.0.7",
     "@storybook/addon-options": "5.3.21",
-    "@storybook/react": "5.3.21",
+    "@storybook/react": "6.2.9",
     "@types/react": "16.9.56",
     "babel-loader": "8.2.1",
     "cross-env": "7.0.2",
