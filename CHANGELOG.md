@@ -1,3 +1,10 @@
+## [3.0.12](https://github.com/researchgate/react-intersection-list/compare/v3.0.11...v3.0.12) (2021-05-11)
+
+
+### Bug Fixes
+
+* **renovate:** Force default branch to be main ([74fa774](https://github.com/researchgate/react-intersection-list/commit/74fa77474de0c95d94f4bfcf24d7b198bfda98e6))
+
 ## [3.0.11](https://github.com/researchgate/react-intersection-list/compare/v3.0.10...v3.0.11) (2020-08-14)
 
 
