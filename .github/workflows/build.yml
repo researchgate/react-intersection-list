@@ -77,15 +77,36 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-      - name: Generate storybook documentation
-        run: yarn build:storybook
-    
-      - name: Generate storybook documentation
-        run: yarn build:storybook
-        uses: JamesIves/github-pages-deploy-action@4.1.1
-        with:
-          branch: gh-pages # The branch the action should deploy to.
-          folder: .docs # The folder the action should deploy.
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+
+    - name: Cache node_modules
+      uses: actions/cache@v2
+      id: cache-nodemodules
+      with:
+        path: node_modules
+        key: ${{ runner.os }}-${{ env.NODE_VERSION }}-nodemodules-${{ hashFiles('**/yarn.lock') }}
+
+    - name: Install dependencies
+      if: steps.cache-nodemodules.outputs.cache-hit != 'true'
+      run: yarn install --frozen-lockfile --non-interactive
+
+    - name: Build latest app
+      run: yarn build
+
+    - name: Generate storybook documentation
+      run: yarn build:storybook
+  
+    - name: Deploy storybook documentation to gh-pages
+      uses: JamesIves/github-pages-deploy-action@4.1.1
+      with:
+        branch: gh-pages # The branch the action should deploy to.
+        folder: .docs # The folder the action should deploy.
           
   release:
     needs: [tests, lint, docs]
