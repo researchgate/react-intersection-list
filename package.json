@@ -89,7 +89,7 @@
     "build:storybook": "build-storybook -o .docs",
     "lint": "spire lint",
     "prepublishOnly": "yarn build",
-    "release": "spire release",
+    "release": "spire release --branches main",
     "storybook": "start-storybook -p 9001 -c .storybook",
     "test": "spire test",
     "ts:check": "tsc --project types"
