@@ -23,7 +23,7 @@
     "@storybook/react": "6.2.9",
     "@types/react": "16.9.56",
     "babel-loader": "8.2.1",
-    "cross-env": "7.0.2",
+    "cross-env": "7.0.3",
     "intersection-observer": "0.11.0",
     "react": "16.14.0",
     "react-dom": "16.14.0",
