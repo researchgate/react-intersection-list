@@ -5022,7 +5022,7 @@ cross-env@7.0.3:
   dependencies:
     cross-spawn "^7.0.1"
 
-cross-spawn@7.0.3, cross-spawn@^7.0.0, cross-spawn@^7.0.1, cross-spawn@^7.0.2:
+cross-spawn@7.0.3, cross-spawn@^7.0.0, cross-spawn@^7.0.1, cross-spawn@^7.0.2, cross-spawn@^7.0.3:
   version "7.0.3"
   resolved "https://registry.yarnpkg.com/cross-spawn/-/cross-spawn-7.0.3.tgz#f73a85b9d5d41d045551c177e2882d4ac85728a6"
   integrity sha512-iRDPJKUPVEND7dHPO8rkbOnPpyDygcDFtWjpeWNCgy8WP2rXcxXL8TskReQl6OrB2G7+UJrags1q15Fudc7G6w==
@@ -6303,6 +6303,21 @@ execa@^4.0.0, execa@^4.0.1:
     signal-exit "^3.0.2"
     strip-final-newline "^2.0.0"
 
+execa@^5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/execa/-/execa-5.0.0.tgz#4029b0007998a841fbd1032e5f4de86a3c1e3376"
+  integrity sha512-ov6w/2LCiuyO4RLYGdpFGjkcs0wMTgGE8PrkTHikeUy5iJekXyPIKUjifk5CsE0pt7sMCrMZ3YNqoCj6idQOnQ==
+  dependencies:
+    cross-spawn "^7.0.3"
+    get-stream "^6.0.0"
+    human-signals "^2.1.0"
+    is-stream "^2.0.0"
+    merge-stream "^2.0.0"
+    npm-run-path "^4.0.1"
+    onetime "^5.1.2"
+    signal-exit "^3.0.3"
+    strip-final-newline "^2.0.0"
+
 exit@^0.1.2:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/exit/-/exit-0.1.2.tgz#0632638f8d877cc82107d30a0fff1a17cba1cd0c"
@@ -6956,6 +6971,11 @@ get-stream@^5.0.0, get-stream@^5.1.0:
   dependencies:
     pump "^3.0.0"
 
+get-stream@^6.0.0:
+  version "6.0.1"
+  resolved "https://registry.yarnpkg.com/get-stream/-/get-stream-6.0.1.tgz#a262d8eef67aced57c2852ad6167526a43cbf7b7"
+  integrity sha512-ts6Wi+2j3jQjqi70w5AlN8DFnkSwC+MqmxEzdEALB2qXZYV3X/b1CTfgPLGJNMeAWxdPfU8FO1ms3NUfaHCPYg==
+
 get-value@^2.0.3, get-value@^2.0.6:
   version "2.0.6"
   resolved "https://registry.yarnpkg.com/get-value/-/get-value-2.0.6.tgz#dc15ca1c672387ca76bd37ac0a395ba2042a2c28"
@@ -7528,6 +7548,11 @@ human-signals@^1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/human-signals/-/human-signals-1.1.1.tgz#c5b1cd14f50aeae09ab6c59fe63ba3395fe4dfa3"
   integrity sha512-SEQu7vl8KjNL2eoGBLF3+wAjpsNfA9XMlXAYj/3EdaNfAlxKthD1xjEQfGOUhllCGGJVNY34bRr6lPINhNjyZw==
+
+human-signals@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/human-signals/-/human-signals-2.1.0.tgz#dc91fcba42e4d06e4abaed33b3e7a3c02f514ea0"
+  integrity sha512-B4FFZ6q/T2jhhksgkbEW3HBvWIfDW85snkQgawt07S7J5QXTk6BkNV+0yAeZrM5QpMAdYlocGoljn0sJ/WQkFw==
 
 humanize-ms@^1.2.1:
   version "1.2.1"
@@ -10339,7 +10364,7 @@ npm-run-path@^2.0.0:
   dependencies:
     path-key "^2.0.0"
 
-npm-run-path@^4.0.0:
+npm-run-path@^4.0.0, npm-run-path@^4.0.1:
   version "4.0.1"
   resolved "https://registry.yarnpkg.com/npm-run-path/-/npm-run-path-4.0.1.tgz#b7ecd1e5ed53da8e37a55e1c2269e0b97ed748ea"
   integrity sha512-S48WzZW777zhNIrn7gxOlISNAqi9ZC/uQFnRdbeIHhZhCA6UqpkOT8T1G7BvfdgP4Er8gF4sUbaS0i7QvIfCWw==
@@ -10619,7 +10644,7 @@ once@^1.3.0, once@^1.3.1, once@^1.4.0, once@~1.4.0:
   dependencies:
     wrappy "1"
 
-onetime@^5.1.0:
+onetime@^5.1.0, onetime@^5.1.2:
   version "5.1.2"
   resolved "https://registry.yarnpkg.com/onetime/-/onetime-5.1.2.tgz#d0e96ebb56b07476df1dd9c4806e5237985ca45e"
   integrity sha512-kbpaSSGJTWdAY5KPVeMOKXSrPtr8C8C7wodJbcsd51jRnmD+GZu8Y0VoU6Dm5Z4vWr0Ig/1NKuWRKf7j5aaYSg==
@@ -12766,7 +12791,7 @@ side-channel@^1.0.2, side-channel@^1.0.4:
     get-intrinsic "^1.0.2"
     object-inspect "^1.9.0"
 
-signal-exit@^3.0.0, signal-exit@^3.0.2:
+signal-exit@^3.0.0, signal-exit@^3.0.2, signal-exit@^3.0.3:
   version "3.0.3"
   resolved "https://registry.yarnpkg.com/signal-exit/-/signal-exit-3.0.3.tgz#a1410c2edd8f077b08b4e253c8eacfcaf057461c"
   integrity sha512-VUJ49FC8U1OxwZLxIbTTrDvLnf/6TDgxZcK8wxR8zs13xpx7xbG60ndBlhNrFi2EMuFRoeDoJO7wthSLq42EjA==
@@ -12988,24 +13013,24 @@ spdx-license-ids@^3.0.0:
   resolved "https://registry.yarnpkg.com/spdx-license-ids/-/spdx-license-ids-3.0.6.tgz#c80757383c28abf7296744998cbc106ae8b854ce"
   integrity sha512-+orQK83kyMva3WyPf59k1+Y525csj5JejicWut55zeTWANuN17qSiSLUXWtzHeNWORSvT7GLDJ/E/XiIWoXBTw==
 
-spire-config-default@^3.2.1:
-  version "3.2.1"
-  resolved "https://registry.yarnpkg.com/spire-config-default/-/spire-config-default-3.2.1.tgz#8c3834dd54bd35093b44938e6eb20c71ea6a1cb7"
-  integrity sha512-0rNrIPuuUKHv8L17EpwUqrbDWOgBxGs6BZrM9oTpIjU82sqWmCu1JLV01MbPhySmSG9Olzj1B6Iw3xTuKBADwg==
+spire-config-default@^3.2.2:
+  version "3.2.2"
+  resolved "https://registry.yarnpkg.com/spire-config-default/-/spire-config-default-3.2.2.tgz#002af58eda3ff46dd8480f7f36c907f9f0f9e2d5"
+  integrity sha512-mpYjuiAT+mC5+UmWKnbUh7sIyM2ER7mSl9sKH1ZPPGa5TvpZce6Ho4fLIZJV7XGxCxTl3oPhLcwQ7+Kv8eOMHA==
   dependencies:
-    spire-plugin-clean "^3.0.2"
+    spire-plugin-clean "^3.2.2"
     spire-plugin-doctoc "^3.0.2"
-    spire-plugin-eslint "^3.1.0"
-    spire-plugin-jest "^3.0.2"
+    spire-plugin-eslint "^3.2.2"
+    spire-plugin-jest "^3.2.2"
     spire-plugin-lint-staged "^3.2.1"
-    spire-plugin-prettier "^3.0.2"
+    spire-plugin-prettier "^3.2.2"
 
-spire-plugin-clean@^3.0.2:
-  version "3.0.2"
-  resolved "https://registry.yarnpkg.com/spire-plugin-clean/-/spire-plugin-clean-3.0.2.tgz#772722728ee67220bf0554095f3f25a6f01c9b3c"
-  integrity sha512-x5BbHJn3yRpWLwYaCXRr0xmEynCzIyLpfB4EeZLxOa63AZVgnM4bZEEnItR+FVsGlz20wiw6n7/t8DnQsXPwag==
+spire-plugin-clean@^3.2.2:
+  version "3.2.2"
+  resolved "https://registry.yarnpkg.com/spire-plugin-clean/-/spire-plugin-clean-3.2.2.tgz#62bad8838fe1f729b52749946e98e2bae5e97bb8"
+  integrity sha512-dRE+87bQf+PSL5DP/xPZB4R6upvwW+Bk7ykoXSzYT/7DCPf0b1MblWkct/Y2JS03hjDBiCSYpYv5XwkcPkFyMQ==
   dependencies:
-    execa "^4.0.0"
+    execa "^5.0.0"
 
 spire-plugin-doctoc@^3.0.2:
   version "3.0.2"
@@ -13014,22 +13039,22 @@ spire-plugin-doctoc@^3.0.2:
   dependencies:
     doctoc "^1.4.0"
 
-spire-plugin-eslint@^3.1.0:
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/spire-plugin-eslint/-/spire-plugin-eslint-3.1.0.tgz#ff87f4523eb3adde0133c6272e569e0abd584593"
-  integrity sha512-Bdm1JCyYBToBjzx1f7kaBseQeF3HnRL0DjA7Jr7GmfLov3Cmg4PdU5azA4gAmnqF8D+OsG4xgYlcYr7QVSOJtw==
+spire-plugin-eslint@^3.2.2:
+  version "3.2.2"
+  resolved "https://registry.yarnpkg.com/spire-plugin-eslint/-/spire-plugin-eslint-3.2.2.tgz#a7d3bf27de44372b386148e3751dae7c56f4ae26"
+  integrity sha512-/ha/dAesx4P3bTygP+Lgtd+QffoGIxT+uNuCED5OYnH3sXLOH+/81odFNON4XwV1PqBlIBFxXIdufBygqola9w==
   dependencies:
     eslint "^7.5.0"
     eslint-config-prettier "^6.0.0"
     eslint-plugin-prettier "^3.1.0"
-    execa "^4.0.0"
+    execa "^5.0.0"
 
-spire-plugin-jest@^3.0.2:
-  version "3.0.2"
-  resolved "https://registry.yarnpkg.com/spire-plugin-jest/-/spire-plugin-jest-3.0.2.tgz#404b0a36225c52518d6002f6e2e9e9718e7dfe33"
-  integrity sha512-X2sBxRFAqwhvZ6ewWiZeXircPII9djKTsQqlYrLMA3PopRqmf0/bTxMWI1oNiWOaL6aBsP6Z5+rQJAoOIt3ZJQ==
+spire-plugin-jest@^3.2.2:
+  version "3.2.2"
+  resolved "https://registry.yarnpkg.com/spire-plugin-jest/-/spire-plugin-jest-3.2.2.tgz#cd011c70e50f34f71d90ff02135fcd5c327fa505"
+  integrity sha512-nLw7Un2Pm7ydceUxUEwOX4rWzzBqL6yxm3WxXZwJg4XrzyWV7Bm7IxvZF/v0RsMSoPhFioomiJ3PIp3f/3acbA==
   dependencies:
-    execa "^4.0.0"
+    execa "^5.0.0"
     jest "^26.0.0"
 
 spire-plugin-lint-staged@^3.2.1:
@@ -13039,18 +13064,18 @@ spire-plugin-lint-staged@^3.2.1:
   dependencies:
     lint-staged "^10.0.0"
 
-spire-plugin-prettier@^3.0.2:
-  version "3.0.2"
-  resolved "https://registry.yarnpkg.com/spire-plugin-prettier/-/spire-plugin-prettier-3.0.2.tgz#a9364eed40196c294fdf2686b4a98cde8879341a"
-  integrity sha512-kaN16MisFDfjdyhagTEKirbbbBOM4iFKjPfhBcnJaDNixEPBUqkS8JeItwqF0MXuzSZzbhvWuj2A8S/Ir6G1Tw==
+spire-plugin-prettier@^3.2.2:
+  version "3.2.2"
+  resolved "https://registry.yarnpkg.com/spire-plugin-prettier/-/spire-plugin-prettier-3.2.2.tgz#e440ca3d36be9fb1780e896ddcc231b37754e1ed"
+  integrity sha512-PML6+ruzMXSaMqmfiAJPYfLYzJxsRv1oeyTeXPA09ASlpKqhZvSKchudHbhUNyAPUuyYFyuGCTpdJJ1GiTxhlA==
   dependencies:
-    execa "^4.0.0"
+    execa "^5.0.0"
     prettier "^2.0.0"
 
-spire-plugin-semantic-release@3.0.2:
-  version "3.0.2"
-  resolved "https://registry.yarnpkg.com/spire-plugin-semantic-release/-/spire-plugin-semantic-release-3.0.2.tgz#2ba493d256d6e94ca8e8b3205e2216a306c3f15d"
-  integrity sha512-a1b/xwmptQ8Nb8G6lOQRiWETMcy32avOHs6xm32M7767lNbKLRcOv7cTd/Acn7SXtAKkrw8rdBiOj3H66Scl1A==
+spire-plugin-semantic-release@3.2.2:
+  version "3.2.2"
+  resolved "https://registry.yarnpkg.com/spire-plugin-semantic-release/-/spire-plugin-semantic-release-3.2.2.tgz#b60f233504fda15d358ffba679964d09de3ad178"
+  integrity sha512-8iPRPqza26+7jR8twzkTP6g3BQh+/OSfkS8rZuLv3QyLQnI3JDT5LWbus8Ifary3Q8fHPmBmc5bGEswxomDKlg==
   dependencies:
     "@semantic-release/changelog" "^5.0.0"
     "@semantic-release/commit-analyzer" "^8.0.0"
@@ -13058,7 +13083,7 @@ spire-plugin-semantic-release@3.0.2:
     "@semantic-release/github" "^7.0.0"
     "@semantic-release/gitlab" "^6.0.0"
     "@semantic-release/release-notes-generator" "^9.0.0"
-    execa "^4.0.0"
+    execa "^5.0.0"
     semantic-release "^17.0.0"
 
 spire-plugin-yarn@^3.0.0:
@@ -13070,10 +13095,10 @@ spire-plugin-yarn@^3.0.0:
     use-yarn "^2.2.0"
     yarn-deduplicate "^2.0.0"
 
-spire@3.2.1:
-  version "3.2.1"
-  resolved "https://registry.yarnpkg.com/spire/-/spire-3.2.1.tgz#d6e53ef1c7e957c67b9dd517479e6b1b2bcc309c"
-  integrity sha512-j2R9l75jt3OlCWWTMkkWkmBnKFEYGQe5sqSM2TtV+UihjiCe9yxttvA4Yf+7JKYEGoBFr5KcrGlUtTgdHp2Kkw==
+spire@3.2.2:
+  version "3.2.2"
+  resolved "https://registry.yarnpkg.com/spire/-/spire-3.2.2.tgz#49c5d581f10c8c4a688684790fda65f8f4854ccf"
+  integrity sha512-vyklhHtCiwuC2sY4Mp8iI6vCyPD7kbdroVSdW16cz9Kae7qbOUGw2AilKsykDxbxBgFyUeSVK1jN+pLDLN3Myw==
   dependencies:
     cosmiconfig "^7.0.0"
     detect-indent "^6.0.0"
@@ -13083,7 +13108,7 @@ spire@3.2.1:
     invariant "^2.2.4"
     pretty-format "^26.0.0"
     signale "^1.4.0"
-    spire-config-default "^3.2.1"
+    spire-config-default "^3.2.2"
     yargs "^16.0.0"
 
 split-on-first@^1.0.0:
