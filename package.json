@@ -31,7 +31,7 @@
     "spire": "3.2.2",
     "spire-plugin-semantic-release": "3.2.2",
     "typescript": "3.9.9",
-    "whatwg-fetch": "3.5.0"
+    "whatwg-fetch": "3.6.2"
   },
   "files": [
     "lib",
