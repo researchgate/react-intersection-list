@@ -18,7 +18,7 @@
     "@babel/cli": "7.14.3",
     "@babel/core": "7.14.3",
     "@researchgate/babel-preset": "2.0.8",
-    "@researchgate/spire-config": "5.0.7",
+    "@researchgate/spire-config": "7.0.0",
     "@storybook/addon-options": "5.3.21",
     "@storybook/react": "6.2.9",
     "@types/react": "17.0.6",
