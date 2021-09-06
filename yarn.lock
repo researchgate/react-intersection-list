@@ -1726,10 +1726,10 @@
     prop-types "^15.6.1"
     react-lifecycles-compat "^3.0.4"
 
-"@researchgate/babel-preset@2.0.13":
-  version "2.0.13"
-  resolved "https://registry.yarnpkg.com/@researchgate/babel-preset/-/babel-preset-2.0.13.tgz#183459d2f8e504ff0b4e531a7a37a9f275067bf7"
-  integrity sha512-YbwAqO06weQZlE5ZGinFihye9OOjT1j3h6CZw1tOHUGp9sDf+WMsxadm3mB7aLcAv1J/69zlnBsejqo8RizMkw==
+"@researchgate/babel-preset@2.0.14":
+  version "2.0.14"
+  resolved "https://registry.yarnpkg.com/@researchgate/babel-preset/-/babel-preset-2.0.14.tgz#3c98061995c6e6b1af0d97bf19902fc637239ecb"
+  integrity sha512-XP7cjX/Q8qAyNHDVnTXL3S5yaBdxF+h2Bk8WR7DBOF33d6/iDPMVgUZVpcuqm7QuiHBe1XFn9rHT/oQ2VhkmxQ==
   dependencies:
     "@babel/plugin-proposal-class-properties" "^7.4.0"
     "@babel/plugin-proposal-object-rest-spread" "^7.4.3"
