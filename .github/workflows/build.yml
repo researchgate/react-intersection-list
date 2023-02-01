@@ -103,7 +103,7 @@ jobs:
       run: yarn build:storybook
   
     - name: Deploy storybook documentation to gh-pages
-      uses: JamesIves/github-pages-deploy-action@v4.2.5
+      uses: JamesIves/github-pages-deploy-action@v4.4.1
       with:
         branch: gh-pages # The branch the action should deploy to.
         folder: .docs # The folder the action should deploy.
