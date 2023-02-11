@@ -21,7 +21,7 @@
     "@researchgate/spire-config": "7.0.0",
     "@storybook/addon-options": "5.3.21",
     "@storybook/react": "6.3.12",
-    "@types/react": "17.0.53",
+    "@types/react": "18.0.28",
     "babel-loader": "8.3.0",
     "cross-env": "7.0.3",
     "intersection-observer": "0.12.2",
