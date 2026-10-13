@@ -28,8 +28,8 @@
     "react": "16.14.0",
     "react-dom": "16.14.0",
     "react-test-renderer": "16.14.0",
-    "spire": "4.1.2",
-    "spire-plugin-semantic-release": "4.1.0",
+    "spire": "5.0.8",
+    "spire-plugin-semantic-release": "5.0.9",
     "typescript": "4.9.5",
     "whatwg-fetch": "3.6.2"
   },
